@@ -177,6 +177,84 @@
     frontRightSegment.rotation.y = Math.PI;
     room.add(frontRightSegment);
 
+    function makeLabelSprite(text) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'rgba(8,8,8,0.75)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = 'bold 28px Inter, sans-serif';
+      ctx.fillStyle = '#c8a84b';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+      const sprite = new THREE.Sprite(material);
+      sprite.scale.set(1.6, 0.4, 1);
+      return sprite;
+    }
+
+    function addLabel(text, position) {
+      const sprite = makeLabelSprite(text);
+      sprite.position.copy(position);
+      room.add(sprite);
+    }
+
+    // Counter near the entrance
+    const counterBaseMaterial = new THREE.MeshStandardMaterial({ color: 0x141414, roughness: 0.8 });
+    const counterTopMaterial = new THREE.MeshStandardMaterial({ color: 0xc8a84b, roughness: 0.4, metalness: 0.3 });
+
+    const counterBase = new THREE.Mesh(new THREE.BoxGeometry(3, 1, 0.8), counterBaseMaterial);
+    counterBase.position.set(0, 0.5, ROOM_DEPTH / 2 - 1.4);
+    room.add(counterBase);
+
+    const counterTop = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.08, 0.9), counterTopMaterial);
+    counterTop.position.set(0, 1.04, ROOM_DEPTH / 2 - 1.4);
+    room.add(counterTop);
+
+    addLabel('Counter', new THREE.Vector3(0, 1.8, ROOM_DEPTH / 2 - 1.4));
+
+    // Shelves along the back and side walls
+    const shelfBaseMaterial = new THREE.MeshStandardMaterial({ color: 0x1c1c1c, roughness: 0.85 });
+    const shelfEdgeMaterial = new THREE.MeshStandardMaterial({ color: 0xc8a84b, roughness: 0.5, metalness: 0.2 });
+
+    function addShelf(x, z, rotationY, label) {
+      const shelf = new THREE.Group();
+
+      const base = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.6, 0.5), shelfBaseMaterial);
+      base.position.y = 0.8;
+      shelf.add(base);
+
+      const edge = new THREE.Mesh(new THREE.BoxGeometry(2.45, 0.06, 0.52), shelfEdgeMaterial);
+      edge.position.y = 1.6;
+      shelf.add(edge);
+
+      shelf.position.set(x, 0, z);
+      shelf.rotation.y = rotationY;
+      room.add(shelf);
+
+      addLabel(label, new THREE.Vector3(x, 2.3, z + (rotationY === 0 ? 0.4 : 0)));
+    }
+
+    addShelf(-4, -ROOM_DEPTH / 2 + 0.3, 0, 'Pomade');
+    addShelf(0, -ROOM_DEPTH / 2 + 0.3, 0, 'Hair Spray');
+    addShelf(4, -ROOM_DEPTH / 2 + 0.3, 0, 'Styling Clay');
+    addShelf(-ROOM_WIDTH / 2 + 0.3, -2, Math.PI / 2, 'Grooming Tools');
+
+    let loadCheckTimer = setTimeout(() => {
+      const canvasExists = container.querySelector('canvas');
+      if (!canvasExists) {
+        document.getElementById('fallback-message').classList.add('show');
+      }
+    }, 4000);
+
+    window.addEventListener('error', () => {
+      document.getElementById('fallback-message').classList.add('show');
+    });
+
     function resize() {
       const width = container.clientWidth;
       const height = container.clientHeight;
