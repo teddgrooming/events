@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store Preview — Tedd Grooming</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #080808;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px 12px;
+    text-align: center;
+  }
+
+  .brand-logo {
+    width: 160px;
+    height: auto;
+  }
+
+  .brand-sub {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 2px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  #scene-container {
+    width: 100%;
+    flex: 1;
+    position: relative;
+  }
+
+  #scene-container canvas {
+    display: block;
+  }
+
+  #fallback-message {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+    padding: 20px;
+  }
+
+  #fallback-message.show { display: flex; }
+</style>
+</head>
+<body>
+
+  <div class="brand">
+    <img class="brand-logo" src="shop/images/tedd-logo.png" alt="Tedd Grooming">
+    <div class="brand-sub">Store Layout Preview</div>
+  </div>
+
+  <div id="scene-container">
+    <div id="fallback-message">3D preview unavailable — check your connection and reload.</div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const ROOM_WIDTH = 12;
+    const ROOM_DEPTH = 9;
+    const ROOM_HEIGHT = 3.5;
+
+    const container = document.getElementById('scene-container');
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x080808);
+
+    const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(8, 7, 10);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 1, 0);
+    controls.enableDamping = true;
+    controls.minDistance = 4;
+    controls.maxDistance = 22;
+    controls.maxPolarAngle = Math.PI / 2.05;
+    controls.update();
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xfff4d6, 0.9);
+    keyLight.position.set(8, 10, 6);
+    scene.add(keyLight);
+
+    const fillLight = new THREE.DirectionalLight(0xaab8ff, 0.35);
+    fillLight.position.set(-6, 5, -4);
+    scene.add(fillLight);
+
+    const room = new THREE.Group();
+    scene.add(room);
+
+    const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 });
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(ROOM_WIDTH, ROOM_DEPTH), floorMaterial);
+    floor.rotation.x = -Math.PI / 2;
+    room.add(floor);
+
+    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x141414, roughness: 0.95 });
+    const ENTRANCE_WIDTH = 2.4;
+
+    const backWall = new THREE.Mesh(new THREE.PlaneGeometry(ROOM_WIDTH, ROOM_HEIGHT), wallMaterial);
+    backWall.position.set(0, ROOM_HEIGHT / 2, -ROOM_DEPTH / 2);
+    room.add(backWall);
+
+    const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(ROOM_DEPTH, ROOM_HEIGHT), wallMaterial);
+    leftWall.position.set(-ROOM_WIDTH / 2, ROOM_HEIGHT / 2, 0);
+    leftWall.rotation.y = Math.PI / 2;
+    room.add(leftWall);
+
+    const rightWall = new THREE.Mesh(new THREE.PlaneGeometry(ROOM_DEPTH, ROOM_HEIGHT), wallMaterial);
+    rightWall.position.set(ROOM_WIDTH / 2, ROOM_HEIGHT / 2, 0);
+    rightWall.rotation.y = -Math.PI / 2;
+    room.add(rightWall);
+
+    // Front wall has a gap (entrance) in the middle, built from two side segments.
+    const frontSegmentWidth = (ROOM_WIDTH - ENTRANCE_WIDTH) / 2;
+    const frontLeftSegment = new THREE.Mesh(new THREE.PlaneGeometry(frontSegmentWidth, ROOM_HEIGHT), wallMaterial);
+    frontLeftSegment.position.set(-(ENTRANCE_WIDTH / 2 + frontSegmentWidth / 2), ROOM_HEIGHT / 2, ROOM_DEPTH / 2);
+    frontLeftSegment.rotation.y = Math.PI;
+    room.add(frontLeftSegment);
+
+    const frontRightSegment = new THREE.Mesh(new THREE.PlaneGeometry(frontSegmentWidth, ROOM_HEIGHT), wallMaterial);
+    frontRightSegment.position.set(ENTRANCE_WIDTH / 2 + frontSegmentWidth / 2, ROOM_HEIGHT / 2, ROOM_DEPTH / 2);
+    frontRightSegment.rotation.y = Math.PI;
+    room.add(frontRightSegment);
+
+    function resize() {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+    window.addEventListener('resize', resize);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+
+</body>
+</html>
