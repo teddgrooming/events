@@ -143,12 +143,64 @@
     const room = new THREE.Group();
     scene.add(room);
 
-    const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 });
+    const textureLoader = new THREE.TextureLoader();
+
+    function loadTiledTexture(url, repeatX, repeatY) {
+      const texture = textureLoader.load(url);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(repeatX, repeatY);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    }
+
+    function makeSmokeyTileTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#6e6e72';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle smokey mottling
+      for (let i = 0; i < 60; i++) {
+        const shade = 90 + Math.floor(Math.random() * 30);
+        ctx.fillStyle = `rgba(${shade},${shade},${shade + 2},0.15)`;
+        const size = 20 + Math.random() * 40;
+        ctx.beginPath();
+        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Tile grout lines (4x4 grid)
+      ctx.strokeStyle = 'rgba(40,40,42,0.8)';
+      ctx.lineWidth = 3;
+      const cell = canvas.width / 4;
+      for (let i = 0; i <= 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * cell, 0);
+        ctx.lineTo(i * cell, canvas.height);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i * cell);
+        ctx.lineTo(canvas.width, i * cell);
+        ctx.stroke();
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(ROOM_WIDTH / 2, ROOM_DEPTH / 2);
+      return texture;
+    }
+
+    const floorTexture = makeSmokeyTileTexture();
+    const floorMaterial = new THREE.MeshStandardMaterial({ map: floorTexture, roughness: 0.6 });
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(ROOM_WIDTH, ROOM_DEPTH), floorMaterial);
     floor.rotation.x = -Math.PI / 2;
     room.add(floor);
 
-    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x141414, roughness: 0.95 });
+    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xf5f5f0, roughness: 0.85 });
     const ENTRANCE_WIDTH = 2.4;
 
     const backWall = new THREE.Mesh(new THREE.PlaneGeometry(ROOM_WIDTH, ROOM_HEIGHT), wallMaterial);
@@ -203,9 +255,28 @@
       room.add(sprite);
     }
 
-    // Counter near the entrance
-    const counterBaseMaterial = new THREE.MeshStandardMaterial({ color: 0x141414, roughness: 0.8 });
-    const counterTopMaterial = new THREE.MeshStandardMaterial({ color: 0xc8a84b, roughness: 0.4, metalness: 0.3 });
+    // Counter near the entrance — glass table
+    const counterGlassMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xeaf6f6,
+      transmission: 1,
+      transparent: true,
+      opacity: 1,
+      roughness: 0.05,
+      thickness: 0.3,
+      ior: 1.5,
+      metalness: 0,
+    });
+    const counterBaseMaterial = counterGlassMaterial;
+    const counterTopMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xeaf6f6,
+      transmission: 1,
+      transparent: true,
+      opacity: 1,
+      roughness: 0.02,
+      thickness: 0.1,
+      ior: 1.5,
+      metalness: 0,
+    });
 
     const counterBase = new THREE.Mesh(new THREE.BoxGeometry(3, 1, 0.8), counterBaseMaterial);
     counterBase.position.set(0, 0.5, ROOM_DEPTH / 2 - 1.4);
@@ -218,8 +289,9 @@
     addLabel('Counter', new THREE.Vector3(0, 1.8, ROOM_DEPTH / 2 - 1.4));
 
     // Shelves along the back and side walls
-    const shelfBaseMaterial = new THREE.MeshStandardMaterial({ color: 0x1c1c1c, roughness: 0.85 });
-    const shelfEdgeMaterial = new THREE.MeshStandardMaterial({ color: 0xc8a84b, roughness: 0.5, metalness: 0.2 });
+    const shelfWoodTexture = loadTiledTexture('https://threejs.org/examples/textures/hardwood2_diffuse.jpg', 1, 1);
+    const shelfBaseMaterial = new THREE.MeshStandardMaterial({ map: shelfWoodTexture, color: 0x4a3a28, roughness: 0.8 });
+    const shelfEdgeMaterial = new THREE.MeshStandardMaterial({ color: 0xc8a84b, roughness: 0.35, metalness: 0.4 });
 
     function addShelf(x, z, rotationY, label) {
       const shelf = new THREE.Group();
