@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Tedd Grooming",
+    "slug": "tedd-grooming-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#080808"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.teddgrooming.app"
+    }
+  }
+}
