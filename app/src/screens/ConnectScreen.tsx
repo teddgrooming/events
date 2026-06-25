@@ -1,5 +1,5 @@
 import * as Linking from 'expo-linking';
-import { Pressable, ScrollView, Text, View, StyleSheet } from 'react-native';
+import { Pressable, ScrollView, Text, StyleSheet } from 'react-native';
 import { colors, fonts } from '../theme';
 
 type LinkItem = { label: string; url: string };
