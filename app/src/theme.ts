@@ -5,6 +5,9 @@ export const colors = {
   textSecondary: '#888888',
   cardBackground: 'rgba(255,255,255,0.03)',
   cardBorder: 'rgba(255,255,255,0.07)',
+  inactiveBorder: '#444',
+  activeChipBackground: 'rgba(255,255,255,0.08)',
+  activeLabelText: '#1a1a1a',
 };
 
 export const fonts = {

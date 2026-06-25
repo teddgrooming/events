@@ -33,7 +33,7 @@ export default function CatalogScreen({ navigation }: Props) {
                   key={size.label}
                   style={[
                     styles.sizeBtn,
-                    index === sizeIndex && { borderColor: item.accent, backgroundColor: 'rgba(255,255,255,0.08)' },
+                    index === sizeIndex && { borderColor: item.accent, backgroundColor: colors.activeChipBackground },
                   ]}
                   onPress={() => setSelectedSizeIndex((prev) => ({ ...prev, [item.id]: index }))}
                 >
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   sizes: { flexDirection: 'row', gap: 6, marginTop: 10 },
   sizeBtn: {
     borderWidth: 1,
-    borderColor: '#444',
+    borderColor: colors.inactiveBorder,
     borderRadius: 4,
     paddingHorizontal: 12,
     paddingVertical: 6,

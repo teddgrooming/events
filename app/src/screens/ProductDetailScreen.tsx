@@ -73,5 +73,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   sizeLabel: { color: colors.textPrimary, fontFamily: fonts.heading, fontSize: 14 },
-  sizeLabelActive: { color: '#1a1a1a', fontFamily: fonts.heading, fontSize: 14 },
+  sizeLabelActive: { color: colors.activeLabelText, fontFamily: fonts.heading, fontSize: 14 },
 });
