@@ -330,7 +330,7 @@
         <div class="stub-seat">Vol. 1<b id="stubDate">09 NOV</b></div>
       </div>
 
-      <button class="submit" type="submit">Reserve my spot</button>
+      <button class="submit" type="submit" id="submitBtn">Reserve with Payment</button>
       <div class="hint">Your spot is reserved the moment you hit submit — we'll confirm by WhatsApp.</div>
 
       <div class="confirm" id="confirmBox" hidden>
@@ -376,6 +376,7 @@
   var confirmText = document.getElementById('confirmText');
   var paymentBox = document.getElementById('paymentBox');
   var paymentWaLink = document.getElementById('paymentWaLink');
+  var submitBtn = document.getElementById('submitBtn');
 
   function setTrack(t){
     track = t;
@@ -385,6 +386,7 @@
     fieldShop.hidden = !isM;
     fieldGuests.hidden = isM;
     stubTrack.textContent = isM ? 'Private Exchange · Limited seats' : 'Open Exchange · Free entry';
+    submitBtn.textContent = isM ? 'Reserve with Payment' : 'Reserve my spot';
   }
   tabM.addEventListener('click', function(){ setTrack('masterclass'); });
   tabO.addEventListener('click', function(){ setTrack('openhouse'); });
