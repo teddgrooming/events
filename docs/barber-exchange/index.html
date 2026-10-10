@@ -206,6 +206,29 @@
     border:1px solid var(--line);border-radius:6px;font-size:13.5px;line-height:1.5;
   }
 
+  .payment{
+    border:1px solid var(--accent);border-radius:6px;padding:18px 16px;
+    display:flex;flex-direction:column;gap:12px;
+    background:color-mix(in srgb, var(--accent) 6%, transparent);
+  }
+  .payment-title{
+    font-family:"Oswald", sans-serif;font-weight:600;font-size:16px;
+    text-transform:uppercase;letter-spacing:.02em;
+  }
+  .payment-row{
+    display:flex;justify-content:space-between;gap:12px;font-size:13.5px;
+    padding-bottom:9px;border-bottom:1px dashed var(--line);
+  }
+  .payment-row:last-of-type{border-bottom:none;padding-bottom:0;}
+  .payment-row span:first-child{color:var(--muted);}
+  .payment-row span:last-child{font-weight:600;text-align:right;}
+  .payment-cta{
+    display:block;text-align:center;font-weight:600;font-size:14.5px;
+    background:var(--accent);color:#fff;padding:12px 16px;border-radius:5px;
+    text-decoration:none;
+  }
+  .payment-note{font-size:12px;color:var(--muted);line-height:1.5;}
+
   /* ---------- Footer ---------- */
   footer{display:flex;flex-direction:column;gap:6px;text-align:center;}
   footer .venue{font-size:14px;}
@@ -308,7 +331,17 @@
 
       <div class="confirm" id="confirmBox" hidden>
         <span>✓</span>
-        <span>Got it — your RSVP is in. We'll reach out on WhatsApp to confirm.</span>
+        <span id="confirmText">Got it — your RSVP is in. We'll reach out on WhatsApp to confirm.</span>
+      </div>
+
+      <div class="payment" id="paymentBox" hidden>
+        <div class="payment-title">Complete Your Payment</div>
+        <div class="payment-row"><span>Bank</span><span>Maybank</span></div>
+        <div class="payment-row"><span>Account No.</span><span class="mono">562384824507</span></div>
+        <div class="payment-row"><span>Account Name</span><span>Tedd Grooming Enterprise</span></div>
+        <div class="payment-row"><span>Amount</span><span class="mono">RM229 Early Bird / RM279 Standard</span></div>
+        <a class="payment-cta" id="paymentWaLink" href="https://wa.me/60122554254" target="_blank" rel="noopener">Send Payment Proof on WhatsApp</a>
+        <div class="payment-note">Your seat is only confirmed once payment is received — transfer the amount, then tap above to send your receipt.</div>
       </div>
     </form>
   </div>
@@ -333,6 +366,9 @@
   var nameInput = document.getElementById('fName');
   var form = document.getElementById('rsvpForm');
   var confirmBox = document.getElementById('confirmBox');
+  var confirmText = document.getElementById('confirmText');
+  var paymentBox = document.getElementById('paymentBox');
+  var paymentWaLink = document.getElementById('paymentWaLink');
 
   function setTrack(t){
     track = t;
@@ -376,6 +412,16 @@
           guests: guests || '1'
         })
       }).catch(function(){});
+    }
+
+    if (track === 'masterclass') {
+      confirmText.textContent = 'Got it — your seat is reserved. Complete payment below to lock it in.';
+      var waText = 'Hi, this is ' + name + ' — here is my payment proof for Tedd Barber Exchange Vol. 1 (Private Exchange).';
+      paymentWaLink.href = 'https://wa.me/60122554254?text=' + encodeURIComponent(waText);
+      paymentBox.hidden = false;
+    } else {
+      confirmText.textContent = 'Got it — your RSVP is in. We\'ll reach out on WhatsApp to confirm.';
+      paymentBox.hidden = true;
     }
 
     confirmBox.hidden = false;
