@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Draw Winners – Tedd Grooming</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #0d0d0d;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px 60px;
+    color: #fff;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .trophy { font-size: 52px; margin-bottom: 16px; filter: drop-shadow(0 0 20px rgba(200,168,75,0.5)); }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .brand-name {
+    font-size: 12px;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* Grid */
+  .grid {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .month-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .month-card.has-winners { border-color: #333; }
+  .month-card.current-month { border-color: #c8a84b; }
+
+  .month-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #141414;
+    border-bottom: 1px solid #222;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .month-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .month-card.current-month .month-name { color: #c8a84b; }
+
+  .month-count {
+    font-size: 11px;
+    color: #444;
+    letter-spacing: 1px;
+  }
+
+  .month-card.has-winners .month-count { color: #666; }
+
+  .chevron {
+    font-size: 14px;
+    color: #333;
+    transition: transform 0.2s;
+  }
+
+  .month-card.open .chevron { transform: rotate(90deg); }
+
+  /* Slots */
+  .slots {
+    display: none;
+    flex-direction: column;
+  }
+
+  .month-card.open .slots { display: flex; }
+
+  .slot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+
+  .slot:last-child { border-bottom: none; }
+
+  .slot-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #333;
+    flex-shrink: 0;
+  }
+
+  .slot.filled .slot-num {
+    background: rgba(200,168,75,0.15);
+    color: #c8a84b;
+  }
+
+  .slot-info { flex: 1; min-width: 0; }
+
+  .slot-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .slot-prize {
+    font-size: 11px;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  .slot.filled .slot-prize { color: #666; }
+
+  .slot-empty .slot-name {
+    font-size: 13px;
+    color: #2a2a2a;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Back link */
+  .back-link {
+    margin-top: 44px;
+    font-size: 13px;
+    color: #444;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.15s;
+  }
+
+  .back-link:hover { color: #c8a84b; }
+  #grid-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+</style>
+</head>
+<body>
+  <canvas id="grid-canvas"></canvas>
+<a href="Links.html" style="position:fixed;top:16px;left:16px;z-index:9999;display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(20,20,20,0.85);border:1px solid rgba(255,255,255,0.1);border-radius:20px;color:#aaa;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;font-weight:600;text-decoration:none;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(200,168,75,0.5)'" onmouseout="this.style.color='#aaa';this.style.borderColor='rgba(255,255,255,0.1)'">← Back</a>
+
+  <div class="header">
+    <div class="trophy">🏆</div>
+    <div class="page-title">Lucky Draw Winners</div>
+    <div class="brand-name">Tedd Grooming</div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+
+  <script>
+    // ─────────────────────────────────────────────────────────────
+    // ADD WINNERS HERE
+    // Key format: "YYYY-MMM" (e.g. "2026-Jun")
+    // Each month holds up to 5 winners: { name, prize }
+    // ─────────────────────────────────────────────────────────────
+    const winners = {
+      // "2026-Jun": [
+      //   { name: "Ahmad Razif",   prize: "Styling Clay 120g" },
+      //   { name: "Hakim Roslan",  prize: "Classic Pomade 150g" },
+      // ],
+      // "2026-Jul": [
+      //   { name: "Izzat Amir",    prize: "Hair Mousse 160ml" },
+      // ],
+    };
+
+    // Only show from June 2026 onwards
+    const ALL_MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const START_MONTH = 5; // June = index 5
+    const START_YEAR = 2026;
+    const MONTHS = ALL_MONTHS.slice(START_MONTH); // Jun to Dec
+
+    function toggleMonth(idx) {
+      const card = document.getElementById('card-' + idx);
+      card.classList.toggle('open');
+    }
+
+    function render() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+
+      MONTHS.forEach((mon, i) => {
+        const idx = START_MONTH + i;
+        const key = `${START_YEAR}-${mon}`;
+        const monthWinners = winners[key] || [];
+        const filled = monthWinners.length;
+        const isCurrentMonth = idx === new Date().getMonth() && START_YEAR === new Date().getFullYear();
+        const hasWinners = filled > 0;
+
+        const card = document.createElement('div');
+        card.className = 'month-card' +
+          (hasWinners ? ' has-winners' : '') +
+          (isCurrentMonth ? ' current-month' : '') +
+          (isCurrentMonth || hasWinners ? ' open' : '');
+        card.id = 'card-' + idx;
+
+        // Build 5 slots
+        let slotsHTML = '';
+        for (let i = 0; i < 5; i++) {
+          const w = monthWinners[i];
+          if (w) {
+            slotsHTML += `
+              <div class="slot filled">
+                <div class="slot-num">${i + 1}</div>
+                <div class="slot-info">
+                  <div class="slot-name">👑 ${w.name}</div>
+                  <div class="slot-prize">🎁 ${w.prize}</div>
+                </div>
+              </div>`;
+          } else {
+            slotsHTML += `
+              <div class="slot slot-empty">
+                <div class="slot-num">${i + 1}</div>
+                <div class="slot-info">
+                  <div class="slot-name">— not yet announced —</div>
+                </div>
+              </div>`;
+          }
+        }
+
+        card.innerHTML = `
+          <div class="month-header" onclick="toggleMonth(${idx})">
+            <span class="month-name">${mon} ${START_YEAR}</span>
+            <span class="month-count">${filled}/5 winners</span>
+            <span class="chevron">›</span>
+          </div>
+          <div class="slots">${slotsHTML}</div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    render();
+  </script>
+<script>
+  (function(){
+    const canvas=document.getElementById('grid-canvas');
+    const ctx=canvas.getContext('2d');
+    const CF=80,CN=40;
+    let W,H,last=0,spawnTimer=0;
+    const pulses=[];
+    function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+    window.addEventListener('resize',resize);resize();
+    function spawnPulse(){
+      const horiz=Math.random()>.5;
+      const count=horiz?Math.ceil(H/CN):Math.ceil(W/CN);
+      const fixed=Math.floor(Math.random()*count)*CN;
+      const fast=Math.random()>.75;
+      const silver=Math.random()>.5;
+      pulses.push({horiz,fixed,pos:-10,speed:fast?350+Math.random()*250:90+Math.random()*120,
+        len:fast?50+Math.random()*70:20+Math.random()*40,
+        alpha:0.2+Math.random()*0.25,color:silver?'210,220,255':'160,200,255',width:fast?1.5:1});
+    }
+    function drawGrid(){
+      ctx.lineWidth=.5;
+      ctx.strokeStyle='rgba(160,170,200,0.02)';
+      for(let x=0;x<=W;x+=CF){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+      for(let y=0;y<=H;y+=CF){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+      ctx.strokeStyle='rgba(190,200,220,0.045)';
+      for(let x=0;x<=W;x+=CN){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+      for(let y=0;y<=H;y+=CN){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    }
+    function frame(ts){
+      const dt=Math.min((ts-last)/1000,.05);last=ts;
+      ctx.clearRect(0,0,W,H);drawGrid();
+      spawnTimer-=dt;
+      if(spawnTimer<=0){spawnPulse();spawnTimer=0.2+Math.random()*0.4;}
+      for(let i=pulses.length-1;i>=0;i--){
+        const p=pulses[i];p.pos+=p.speed*dt;
+        if(p.pos-p.len>(p.horiz?W:H)+10){pulses.splice(i,1);continue;}
+        const x0=p.horiz?p.pos-p.len:p.fixed,y0=p.horiz?p.fixed:p.pos-p.len;
+        const x1=p.horiz?p.pos:p.fixed,y1=p.horiz?p.fixed:p.pos;
+        const g=ctx.createLinearGradient(x0,y0,x1,y1);
+        g.addColorStop(0,'transparent');
+        g.addColorStop(.3,`rgba(${p.color},${p.alpha*.4})`);
+        g.addColorStop(.7,`rgba(${p.color},${p.alpha})`);
+        g.addColorStop(1,`rgba(${p.color},${p.alpha*.1})`);
+        ctx.save();ctx.shadowColor=`rgba(${p.color},.7)`;ctx.shadowBlur=6;
+        ctx.strokeStyle=g;ctx.lineWidth=p.width;
+        ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();
+        ctx.shadowBlur=10;ctx.lineWidth=p.width*1.5;
+        ctx.strokeStyle=`rgba(${p.color},${p.alpha})`;
+        ctx.beginPath();
+        ctx.moveTo(p.horiz?p.pos-4:p.fixed,p.horiz?p.fixed:p.pos-4);
+        ctx.lineTo(p.horiz?p.pos:p.fixed,p.horiz?p.fixed:p.pos);
+        ctx.stroke();ctx.restore();
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(t=>{last=t;frame(t);});
+  })();
+</script>
+
+</body>
+</html>
