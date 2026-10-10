@@ -309,6 +309,7 @@
 
 <script>
 (function(){
+  var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzaX0RGb9ByfUPwQBwdglanOg8yVBhqgU4tN-Ksbt6gIAVLbTzVDFKXOOqX__LXehbvSA/exec';
   var track = "masterclass";
   var tabM = document.getElementById('tabMasterclass');
   var tabO = document.getElementById('tabOpenhouse');
@@ -362,6 +363,21 @@
     var mailto = 'mailto:teddgrooming.co@gmail.com'
       + '?subject=' + encodeURIComponent(subject)
       + '&body=' + encodeURIComponent(body);
+
+    if (SHEET_ENDPOINT) {
+      fetch(SHEET_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        keepalive: true,
+        body: new URLSearchParams({
+          session: trackLabel,
+          name: name,
+          phone: phone,
+          shop: shop,
+          guests: guests || '1'
+        })
+      }).catch(function(){});
+    }
 
     window.location.href = mailto;
     confirmBox.hidden = false;
