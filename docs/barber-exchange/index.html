@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tedd Barber Exchange — Vol. 1</title>
+<meta name="description" content="RSVP for Tedd Barber Exchange Vol. 1 — a masterclass and open house at Downsouth Barbershop, Setia Tropika on 9 Nov 2026.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<style>
+  :root{
+    --paper:#F5EFE4;
+    --surface:#FFFFFF;
+    --ink:#1C1510;
+    --muted:#6B5F4D;
+    --accent:#B23A2E;
+    --accent-2:#8A6A1E;
+    --line:#D8CBB0;
+    --shadow: 0 1px 0 var(--line);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#15110C;
+      --surface:#1F1911;
+      --ink:#F2E9D8;
+      --muted:#B8A98C;
+      --accent:#E2574A;
+      --accent-2:#D4AF5A;
+      --line:#332A1C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#15110C;
+    --surface:#1F1911;
+    --ink:#F2E9D8;
+    --muted:#B8A98C;
+    --accent:#E2574A;
+    --accent-2:#D4AF5A;
+    --line:#332A1C;
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Work Sans", system-ui, sans-serif;
+    padding-inline:20px;
+    padding-block:48px 64px;
+    display:flex;
+    justify-content:center;
+    margin:0;
+  }
+  *{box-sizing:border-box;}
+  .page{width:100%;max-width:720px;display:flex;flex-direction:column;gap:56px;}
+
+  .mono{font-family:"JetBrains Mono", ui-monospace, monospace; font-variant-numeric:tabular-nums;}
+
+  /* ---------- Hero ---------- */
+  .hero{display:flex;flex-direction:column;gap:14px;text-align:center;}
+  .eyebrow{
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .brand{
+    font-family:"Oswald", "Work Sans", sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:clamp(34px, 8vw, 54px);
+    line-height:1.02;
+    letter-spacing:.01em;
+    text-wrap:balance;
+    margin:0;
+  }
+  .brand span{color:var(--accent);}
+  .vol{
+    font-family:"Oswald", sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.2em;
+    color:var(--accent-2);
+    text-transform:uppercase;
+  }
+  .rule{
+    width:120px;height:3px;background:var(--accent);
+    margin:6px auto 0;border-radius:2px;
+  }
+  .date-row{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    font-size:15px;color:var(--muted);flex-wrap:wrap;
+  }
+  .date-big{
+    font-family:"JetBrains Mono", monospace;
+    font-weight:700;color:var(--ink);font-size:17px;
+    letter-spacing:.03em;
+  }
+  .dot{width:4px;height:4px;border-radius:50%;background:var(--line);}
+  .venue-link{color:var(--ink);text-decoration-color:var(--line);}
+
+  /* ---------- Section label ---------- */
+  .section-label{
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);display:flex;align-items:center;gap:10px;
+  }
+  .section-label::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* ---------- Tickets ---------- */
+  .tickets{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:560px){.tickets{grid-template-columns:1fr;}}
+  .ticket{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:22px 20px 20px;
+    display:flex;flex-direction:column;gap:12px;
+    position:relative;
+    clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);
+  }
+  .ticket::before{
+    content:"";position:absolute;top:0;right:0;width:14px;height:14px;
+    background:
+      linear-gradient(135deg, transparent 49%, var(--line) 50%, transparent 51%);
+  }
+  .badge{
+    align-self:flex-start;
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    padding:4px 9px;border-radius:3px;font-weight:600;
+  }
+  .badge.limited{background:color-mix(in srgb, var(--accent) 16%, transparent);color:var(--accent);}
+  .badge.free{background:color-mix(in srgb, var(--accent-2) 20%, transparent);color:var(--accent-2);}
+  .ticket h3{
+    font-family:"Oswald", sans-serif;font-size:22px;font-weight:600;
+    text-transform:uppercase;letter-spacing:.01em;margin:0;
+  }
+  .ticket .time{font-size:13px;color:var(--muted);}
+  .ticket p{margin:0;font-size:14px;line-height:1.55;color:var(--ink);}
+  .ticket .educators{
+    display:flex;gap:10px;margin-top:4px;padding-top:12px;border-top:1px dashed var(--line);
+  }
+  .avatar{
+    width:34px;height:34px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:13px;
+    background:var(--paper);border:1.5px solid var(--accent);color:var(--accent);
+  }
+  .edu-info{display:flex;flex-direction:column;justify-content:center;}
+  .edu-info strong{font-size:13px;line-height:1.2;}
+  .edu-info span{font-size:11.5px;color:var(--muted);}
+  .edu-pair{display:flex;flex-direction:column;gap:8px;}
+
+  /* ---------- RSVP ---------- */
+  .rsvp{
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    padding:24px 22px;display:flex;flex-direction:column;gap:18px;
+  }
+  .tabs{display:flex;border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;}
+  .tab{
+    flex:1;text-align:center;padding:9px 8px;border-radius:999px;
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;font-weight:600;color:var(--muted);
+    background:transparent;border:none;cursor:pointer;
+  }
+  .tab[aria-selected="true"]{background:var(--accent);color:#fff;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:12.5px;color:var(--muted);font-weight:500;}
+  .field input{
+    font:inherit;font-size:15px;padding:11px 12px;border-radius:5px;
+    border:1px solid var(--line);background:var(--paper);color:var(--ink);
+  }
+  .field input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+  [hidden]{display:none!important;}
+
+  .stub{
+    border:1px dashed var(--line);border-radius:6px;padding:14px 16px;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    background:var(--paper);
+  }
+  .stub-left{display:flex;flex-direction:column;gap:3px;}
+  .stub-name{font-family:"Oswald",sans-serif;font-weight:600;font-size:17px;text-transform:uppercase;}
+  .stub-track{font-size:12px;color:var(--muted);}
+  .stub-seat{text-align:right;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);}
+  .stub-seat b{display:block;font-size:14px;color:var(--accent);}
+
+  .submit{
+    font:inherit;font-weight:600;font-size:15px;padding:13px 18px;
+    background:var(--accent);color:#fff;border:none;border-radius:5px;
+    cursor:pointer;letter-spacing:.01em;
+  }
+  .submit:active{transform:translateY(1px);}
+  .hint{font-size:12.5px;color:var(--muted);text-align:center;}
+  .confirm{
+    display:flex;gap:10px;align-items:flex-start;padding:12px 14px;
+    background:color-mix(in srgb, var(--accent-2) 14%, transparent);
+    border:1px solid var(--line);border-radius:6px;font-size:13.5px;line-height:1.5;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{display:flex;flex-direction:column;gap:6px;text-align:center;}
+  footer .venue{font-size:14px;}
+  footer .meta{font-size:12.5px;color:var(--muted);}
+  footer a{color:inherit;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="eyebrow">Downsouth Barbershop · Setia Tropika</div>
+    <h1 class="brand">Tedd Barber <span>Exchange</span></h1>
+    <div class="vol">Vol. 1</div>
+    <div class="rule"></div>
+    <div class="date-row">
+      <span class="date-big">09.11.2026</span>
+      <span class="dot"></span>
+      <span>Monday</span>
+      <span class="dot"></span>
+      <a class="venue-link" href="https://www.google.com/maps/search/?api=1&query=Downsouth%20Barbershop%20Setia%20Tropika" target="_blank" rel="noopener">Downsouth Barbershop, Setia Tropika ↗</a>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">The Line-up</div>
+    <div class="tickets" style="margin-top:16px;">
+      <div class="ticket">
+        <span class="badge limited">Limited seats</span>
+        <h3>Masterclass</h3>
+        <div class="time mono">10:00 – 16:00</div>
+        <p>An exclusive sit-down for barbers who want to step their game up — two of the region's top educators, one room, limited slots.</p>
+        <div class="educators">
+          <div class="edu-pair" style="flex:1;">
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div class="avatar">AC</div>
+              <div class="edu-info"><strong>AC</strong><span>Educator, Menspire</span></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div class="avatar">KT</div>
+              <div class="edu-info"><strong>Kenny Tokoya</strong><span>Educator, Wahl</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket">
+        <span class="badge free">Free entry</span>
+        <h3>Open House</h3>
+        <div class="time mono">19:00 – late</div>
+        <p>Doors open to everyone once the sun's down. Makan-makan, live music, and a motor &amp; car show in the yard. No ticket needed to walk in — RSVP just helps us plan the food.</p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Reserve Your Spot</div>
+    <form class="rsvp" id="rsvpForm" style="margin-top:16px;" novalidate>
+
+      <div class="tabs" role="tablist" aria-label="Choose a session">
+        <button type="button" class="tab" id="tabMasterclass" role="tab" aria-selected="true">Masterclass</button>
+        <button type="button" class="tab" id="tabOpenhouse" role="tab" aria-selected="false">Open House</button>
+      </div>
+
+      <div class="field">
+        <label for="fName">Full name</label>
+        <input id="fName" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+      </div>
+
+      <div class="field">
+        <label for="fPhone">WhatsApp number</label>
+        <input id="fPhone" name="phone" type="tel" placeholder="e.g. 012-345 6789" autocomplete="tel" required>
+      </div>
+
+      <div class="field" id="fieldShop">
+        <label for="fShop">Barbershop / Instagram handle</label>
+        <input id="fShop" name="shop" type="text" placeholder="@yourshop">
+      </div>
+
+      <div class="field" id="fieldGuests" hidden>
+        <label for="fGuests">Number of guests (incl. you)</label>
+        <input id="fGuests" name="guests" type="number" min="1" value="1" inputmode="numeric">
+      </div>
+
+      <div class="stub">
+        <div class="stub-left">
+          <span class="stub-name" id="stubName">Your name</span>
+          <span class="stub-track" id="stubTrack">Masterclass · Limited seats</span>
+        </div>
+        <div class="stub-seat">Vol. 1<b id="stubDate">09 NOV</b></div>
+      </div>
+
+      <button class="submit" type="submit">Reserve my spot</button>
+      <div class="hint">Opens your email app with the details filled in — we'll confirm by WhatsApp.</div>
+
+      <div class="confirm" id="confirmBox" hidden>
+        <span>✓</span>
+        <span>Your email app should be open with the RSVP ready to send. If nothing opened, email us directly at <strong>teddgrooming.co@gmail.com</strong>.</span>
+      </div>
+    </form>
+  </div>
+
+  <footer>
+    <div class="venue">Downsouth Barbershop, Setia Tropika</div>
+    <div class="meta">Tedd Grooming Company · Questions? teddgrooming.co@gmail.com</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var track = "masterclass";
+  var tabM = document.getElementById('tabMasterclass');
+  var tabO = document.getElementById('tabOpenhouse');
+  var fieldShop = document.getElementById('fieldShop');
+  var fieldGuests = document.getElementById('fieldGuests');
+  var stubTrack = document.getElementById('stubTrack');
+  var stubName = document.getElementById('stubName');
+  var nameInput = document.getElementById('fName');
+  var form = document.getElementById('rsvpForm');
+  var confirmBox = document.getElementById('confirmBox');
+
+  function setTrack(t){
+    track = t;
+    var isM = t === 'masterclass';
+    tabM.setAttribute('aria-selected', String(isM));
+    tabO.setAttribute('aria-selected', String(!isM));
+    fieldShop.hidden = !isM;
+    fieldGuests.hidden = isM;
+    stubTrack.textContent = isM ? 'Masterclass · Limited seats' : 'Open House · Free entry';
+  }
+  tabM.addEventListener('click', function(){ setTrack('masterclass'); });
+  tabO.addEventListener('click', function(){ setTrack('openhouse'); });
+
+  nameInput.addEventListener('input', function(){
+    stubName.textContent = nameInput.value.trim() || 'Your name';
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('fName').value.trim();
+    var phone = document.getElementById('fPhone').value.trim();
+    if(!name || !phone){
+      if(!name) document.getElementById('fName').focus();
+      else document.getElementById('fPhone').focus();
+      return;
+    }
+    var shop = document.getElementById('fShop').value.trim();
+    var guests = document.getElementById('fGuests').value;
+    var trackLabel = track === 'masterclass' ? 'Masterclass (limited seats)' : 'Open House (free entry)';
+
+    var bodyLines = [
+      'Session: ' + trackLabel,
+      'Name: ' + name,
+      'WhatsApp: ' + phone
+    ];
+    if(track === 'masterclass' && shop){ bodyLines.push('Barbershop / IG: ' + shop); }
+    if(track === 'openhouse'){ bodyLines.push('Guests: ' + (guests || '1')); }
+
+    var subject = 'RSVP - Tedd Barber Exchange Vol. 1 (' + trackLabel + ')';
+    var body = bodyLines.join('\n');
+    var mailto = 'mailto:teddgrooming.co@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+    confirmBox.hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
