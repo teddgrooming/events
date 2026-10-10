@@ -222,6 +222,9 @@
   .payment-row:last-of-type{border-bottom:none;padding-bottom:0;}
   .payment-row span:first-child{color:var(--muted);}
   .payment-row span:last-child{font-weight:600;text-align:right;}
+  .payment-amount{display:inline-flex;align-items:baseline;gap:8px;}
+  .payment-amount .was{color:var(--muted);text-decoration:line-through;font-weight:500;}
+  .payment-amount .now{color:var(--accent);font-weight:700;font-size:16px;}
   .payment-actions{display:flex;gap:10px;flex-wrap:wrap;}
   .payment-cta{
     flex:1;text-align:center;font-weight:600;font-size:14.5px;
@@ -343,7 +346,7 @@
         <div class="payment-row"><span>Bank</span><span>Maybank</span></div>
         <div class="payment-row"><span>Account No.</span><span class="mono">562384824507</span></div>
         <div class="payment-row"><span>Account Name</span><span>Tedd Grooming Enterprise</span></div>
-        <div class="payment-row"><span>Amount</span><span class="mono">RM229 Early Bird / RM279 Standard</span></div>
+        <div class="payment-row"><span>Amount</span><span class="mono payment-amount"><span class="was" id="paymentWas">RM279</span><span class="now" id="paymentNow">RM229</span></span></div>
         <div class="payment-actions">
           <a class="payment-cta" id="paymentWaLink" href="https://wa.me/60122554254" target="_blank" rel="noopener">Send Payment Proof on WhatsApp</a>
           <a class="payment-cta secondary" href="assets/duitnow-qr.jpeg" target="_blank" rel="noopener">View DuitNow QR</a>
@@ -377,6 +380,17 @@
   var paymentBox = document.getElementById('paymentBox');
   var paymentWaLink = document.getElementById('paymentWaLink');
   var submitBtn = document.getElementById('submitBtn');
+
+  var earlyBirdCutoff = new Date('2026-11-02T00:00:00+08:00');
+  var paymentWas = document.getElementById('paymentWas');
+  var paymentNow = document.getElementById('paymentNow');
+  if (Date.now() < earlyBirdCutoff.getTime()) {
+    paymentWas.textContent = 'RM279';
+    paymentNow.textContent = 'RM229';
+  } else {
+    paymentWas.hidden = true;
+    paymentNow.textContent = 'RM279';
+  }
 
   function setTrack(t){
     track = t;
