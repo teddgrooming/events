@@ -304,11 +304,11 @@
       </div>
 
       <button class="submit" type="submit">Reserve my spot</button>
-      <div class="hint">Opens your email app with the details filled in — we'll confirm by WhatsApp.</div>
+      <div class="hint">Your spot is reserved the moment you hit submit — we'll confirm by WhatsApp.</div>
 
       <div class="confirm" id="confirmBox" hidden>
         <span>✓</span>
-        <span>Your email app should be open with the RSVP ready to send. If nothing opened, email us directly at <strong>teddgrooming.co@gmail.com</strong>.</span>
+        <span>Got it — your RSVP is in. We'll reach out on WhatsApp to confirm.</span>
       </div>
     </form>
   </div>
@@ -363,20 +363,6 @@
     var guests = document.getElementById('fGuests').value;
     var trackLabel = track === 'masterclass' ? 'Private Exchange (limited seats)' : 'Open Exchange (free entry)';
 
-    var bodyLines = [
-      'Session: ' + trackLabel,
-      'Name: ' + name,
-      'WhatsApp: ' + phone
-    ];
-    if(track === 'masterclass' && shop){ bodyLines.push('Barbershop / IG: ' + shop); }
-    if(track === 'openhouse'){ bodyLines.push('Guests: ' + (guests || '1')); }
-
-    var subject = 'RSVP - Tedd Barber Exchange Vol. 1 (' + trackLabel + ')';
-    var body = bodyLines.join('\n');
-    var mailto = 'mailto:teddgrooming.co@gmail.com'
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(body);
-
     if (SHEET_ENDPOINT) {
       fetch(SHEET_ENDPOINT, {
         method: 'POST',
@@ -392,7 +378,6 @@
       }).catch(function(){});
     }
 
-    window.location.href = mailto;
     confirmBox.hidden = false;
   });
 })();
