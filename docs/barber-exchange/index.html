@@ -141,12 +141,14 @@
   .ticket .educators{
     display:flex;gap:10px;margin-top:4px;padding-top:12px;border-top:1px dashed var(--line);
   }
-  .price-row{display:flex;gap:10px;}
-  .price-tier{flex:1;display:flex;flex-direction:column;gap:3px;padding:9px 11px;border:1px solid var(--line);border-radius:4px;}
-  .price-tier.active{border-color:var(--accent);background:color-mix(in srgb, var(--accent) 10%, transparent);}
-  .price-label{font-family:"JetBrains Mono", monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
-  .price-value{font-size:21px;font-weight:700;color:var(--ink);}
-  .price-tier.active .price-value{color:var(--accent);}
+  .price-line{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .price-now{font-size:26px;font-weight:700;color:var(--accent);}
+  .price-was{font-size:16px;color:var(--muted);text-decoration:line-through;}
+  .price-tag{
+    font-family:"JetBrains Mono", monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent-2);background:color-mix(in srgb, var(--accent-2) 16%, transparent);
+    padding:3px 9px;border-radius:3px;font-weight:600;
+  }
   .avatar{
     width:34px;height:34px;border-radius:50%;flex:none;
     display:flex;align-items:center;justify-content:center;
@@ -235,15 +237,10 @@
         <span class="badge limited">Limited seats</span>
         <h3>Masterclass</h3>
         <div class="time mono">10:00 – 16:00</div>
-        <div class="price-row" id="priceRow">
-          <div class="price-tier" id="priceEarly">
-            <span class="price-label">Early bird · until 2 Nov</span>
-            <span class="price-value mono">RM229</span>
-          </div>
-          <div class="price-tier" id="priceStandard">
-            <span class="price-label">3&ndash;9 Nov</span>
-            <span class="price-value mono">RM279</span>
-          </div>
+        <div class="price-line">
+          <span class="price-now mono">RM229</span>
+          <span class="price-was mono">RM279</span>
+          <span class="price-tag">Early Bird</span>
         </div>
         <p>An exclusive sit-down for barbers who want to step their game up — two of the region's top educators, one room, limited slots.</p>
         <div class="educators">
@@ -327,11 +324,6 @@
 (function(){
   var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzaX0RGb9ByfUPwQBwdglanOg8yVBhqgU4tN-Ksbt6gIAVLbTzVDFKXOOqX__LXehbvSA/exec';
   var track = "masterclass";
-
-  var earlyBirdCutoff = new Date('2026-11-02T00:00:00+08:00');
-  var priceTierId = Date.now() < earlyBirdCutoff.getTime() ? 'priceEarly' : 'priceStandard';
-  var activeTier = document.getElementById(priceTierId);
-  if (activeTier) { activeTier.classList.add('active'); }
   var tabM = document.getElementById('tabMasterclass');
   var tabO = document.getElementById('tabOpenhouse');
   var fieldShop = document.getElementById('fieldShop');
