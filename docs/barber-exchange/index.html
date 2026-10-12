@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tedd Barber Showcase — Vol. 1</title>
-<meta name="description" content="RSVP for Tedd Barber Showcase Vol. 1 — a masterclass and open house at Downsouth Barbershop, Setia Tropika on 9 Nov 2026.">
+<title>Tedd Barber Exchange — Vol. 1</title>
+<meta name="description" content="RSVP for Tedd Barber Exchange Vol. 1 — a masterclass and open house at Downsouth Barbershop, Setia Tropika on 9 Nov 2026.">
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <style>
@@ -248,7 +248,7 @@
 
   <div class="hero">
     <div class="eyebrow">Downsouth Barbershop · Setia Tropika</div>
-    <h1 class="brand">Tedd Barber <span>Showcase</span></h1>
+    <h1 class="brand">Tedd Barber <span>Exchange</span></h1>
     <div class="vol">Vol. 1</div>
     <div class="rule"></div>
     <div class="date-row">
@@ -265,7 +265,7 @@
     <div class="tickets" style="margin-top:16px;">
       <div class="ticket">
         <span class="badge limited">Limited seats</span>
-        <h3>Look &amp; Learn</h3>
+        <h3>Private Exchange</h3>
         <div class="time mono">10:00 – 16:00</div>
         <div class="price-line">
           <span class="price-now mono">RM229</span>
@@ -289,7 +289,7 @@
 
       <div class="ticket">
         <span class="badge free">Free entry</span>
-        <h3>Santai Sesh</h3>
+        <h3>Santai Fest</h3>
         <div class="time mono">19:00 – late</div>
         <p>Doors open to everyone once the sun's down. Makan-makan, live music, and a motor &amp; car show in the yard. No ticket needed to walk in — RSVP just helps us plan the food.</p>
       </div>
@@ -301,8 +301,8 @@
     <form class="rsvp" id="rsvpForm" style="margin-top:16px;" novalidate>
 
       <div class="tabs" role="tablist" aria-label="Choose a session">
-        <button type="button" class="tab" id="tabMasterclass" role="tab" aria-selected="true">Look &amp; Learn</button>
-        <button type="button" class="tab" id="tabOpenhouse" role="tab" aria-selected="false">Santai Sesh</button>
+        <button type="button" class="tab" id="tabMasterclass" role="tab" aria-selected="true">Private Exchange</button>
+        <button type="button" class="tab" id="tabOpenhouse" role="tab" aria-selected="false">Santai Fest</button>
       </div>
 
       <div class="field">
@@ -328,7 +328,7 @@
       <div class="stub">
         <div class="stub-left">
           <span class="stub-name" id="stubName">Your name</span>
-          <span class="stub-track" id="stubTrack">Look &amp; Learn · Limited seats</span>
+          <span class="stub-track" id="stubTrack">Private Exchange · Limited seats</span>
         </div>
         <div class="stub-seat">VOL. 1<b id="stubDate">09 NOV</b></div>
       </div>
@@ -399,7 +399,7 @@
     tabO.setAttribute('aria-selected', String(!isM));
     fieldShop.hidden = !isM;
     fieldGuests.hidden = isM;
-    stubTrack.textContent = isM ? 'Look & Learn · Limited seats' : 'Santai Sesh · Free entry';
+    stubTrack.textContent = isM ? 'Private Exchange · Limited seats' : 'Santai Fest · Free entry';
     submitBtn.textContent = isM ? 'Reserve with Payment' : 'Reserve my spot';
   }
   tabM.addEventListener('click', function(){ setTrack('masterclass'); });
@@ -420,7 +420,7 @@
     }
     var shop = document.getElementById('fShop').value.trim();
     var guests = document.getElementById('fGuests').value;
-    var trackLabel = track === 'masterclass' ? 'Look & Learn (limited seats)' : 'Santai Sesh (free entry)';
+    var trackLabel = track === 'masterclass' ? 'Private Exchange (limited seats)' : 'Santai Fest (free entry)';
 
     if (SHEET_ENDPOINT) {
       fetch(SHEET_ENDPOINT, {
@@ -439,7 +439,7 @@
 
     if (track === 'masterclass') {
       confirmText.textContent = 'Got it — your seat is reserved. Complete payment below to lock it in.';
-      var waText = 'Hi, this is ' + name + ' — here is my payment proof for Tedd Barber Showcase Vol. 1 (Look & Learn).';
+      var waText = 'Hi, this is ' + name + ' — here is my payment proof for Tedd Barber Exchange Vol. 1 (Private Exchange).';
       paymentWaLink.href = 'https://wa.me/60122554254?text=' + encodeURIComponent(waText);
       paymentBox.hidden = false;
     } else {
