@@ -88,7 +88,7 @@
     font-weight:600;
     font-size:15px;
     letter-spacing:.2em;
-    color:var(--accent-2);
+    color:var(--ink);
     text-transform:uppercase;
   }
   .rule{
@@ -274,7 +274,7 @@
     <div class="tickets" style="margin-top:16px;">
       <div class="ticket">
         <span class="badge limited">Limited seats</span>
-        <h3>Private Exchange</h3>
+        <h3>Look &amp; Learn</h3>
         <div class="time mono">10:00 – 16:00</div>
         <div class="price-line">
           <span class="price-now mono">RM229</span>
@@ -310,7 +310,7 @@
     <form class="rsvp" id="rsvpForm" style="margin-top:16px;" novalidate>
 
       <div class="tabs" role="tablist" aria-label="Choose a session">
-        <button type="button" class="tab" id="tabMasterclass" role="tab" aria-selected="true">Private Exchange</button>
+        <button type="button" class="tab" id="tabMasterclass" role="tab" aria-selected="true">Look &amp; Learn</button>
         <button type="button" class="tab" id="tabOpenhouse" role="tab" aria-selected="false">Santai Fest</button>
       </div>
 
@@ -337,7 +337,7 @@
       <div class="stub">
         <div class="stub-left">
           <span class="stub-name" id="stubName">Your name</span>
-          <span class="stub-track" id="stubTrack">Private Exchange · Limited seats</span>
+          <span class="stub-track" id="stubTrack">Look &amp; Learn · Limited seats</span>
         </div>
         <div class="stub-seat">VOL. 1<b id="stubDate">09 NOV</b></div>
       </div>
@@ -408,7 +408,7 @@
     tabO.setAttribute('aria-selected', String(!isM));
     fieldShop.hidden = !isM;
     fieldGuests.hidden = isM;
-    stubTrack.textContent = isM ? 'Private Exchange · Limited seats' : 'Santai Fest · Free entry';
+    stubTrack.textContent = isM ? 'Look & Learn · Limited seats' : 'Santai Fest · Free entry';
     submitBtn.textContent = isM ? 'Reserve with Payment' : 'Reserve my spot';
   }
   tabM.addEventListener('click', function(){ setTrack('masterclass'); });
@@ -429,7 +429,7 @@
     }
     var shop = document.getElementById('fShop').value.trim();
     var guests = document.getElementById('fGuests').value;
-    var trackLabel = track === 'masterclass' ? 'Private Exchange (limited seats)' : 'Santai Fest (free entry)';
+    var trackLabel = track === 'masterclass' ? 'Look & Learn (limited seats)' : 'Santai Fest (free entry)';
 
     if (SHEET_ENDPOINT) {
       fetch(SHEET_ENDPOINT, {
@@ -448,7 +448,7 @@
 
     if (track === 'masterclass') {
       confirmText.textContent = 'Got it — your seat is reserved. Complete payment below to lock it in.';
-      var waText = 'Hi, this is ' + name + ' — here is my payment proof for Tedd Barber Exchange Vol. 1 (Private Exchange).';
+      var waText = 'Hi, this is ' + name + ' — here is my payment proof for Tedd Barber Exchange Vol. 1 (Look & Learn).';
       paymentWaLink.href = 'https://wa.me/60122554254?text=' + encodeURIComponent(waText);
       paymentBox.hidden = false;
     } else {
