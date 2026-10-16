@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tedd Grooming</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { background: #0a0806; }
+
+  body {
+    min-height: 100vh;
+    color: #e9e1d2;
+    font-family: 'Work Sans', 'Segoe UI', system-ui, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── Register call-to-action under the photo ── */
+  .register-cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 28px; padding: 16px 18px; background: #1a1612; color: #ffffff; text-decoration: none; border-radius: 4px; }
+  .register-kicker { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #c8a84b; white-space: nowrap; }
+  .register-title { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: .06em; text-transform: uppercase; flex: 1; }
+  .register-arrow { font-size: 18px; color: #c8a84b; }
+  /* ── Floating Register Now button on the photo ── */
+  .float-register { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 4; display: inline-block; padding: 14px 26px; background: #c8a84b; color: #0a0806; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-radius: 999px; box-shadow: 0 10px 22px rgba(0,0,0,0.7); white-space: nowrap; }
+  .float-register:active { transform: translate(-50%, -50%) scale(0.97); }
+  /* ── Top-left menu ── */
+  .menu-wrap { position: absolute; top: 12px; left: 12px; z-index: 5; }
+  .menu-btn { width: 40px; height: 40px; border-radius: 6px; border: 0; cursor: pointer; padding: 0; background: rgba(10,8,6,0.7); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
+  .menu-btn span { display: block; width: 20px; height: 2px; background: #ffffff; border-radius: 1px; }
+  .menu-panel { position: fixed; top: 60px; left: 12px; right: 12px; bottom: auto; height: auto; max-height: calc(100dvh - 84px); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; background: #14110d; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); padding: 2px 16px 6px; }
+  @media (min-width: 600px) { .menu-panel { position: absolute; top: 48px; left: 0; right: auto; bottom: auto; width: 250px; max-height: calc(100vh - 90px); } }
+  .menu-panel[hidden] { display: none; }
+  .menu-panel details { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .menu-panel details:last-child { border-bottom: none; }
+  .menu-panel summary { list-style: none; cursor: pointer; padding: 10px 0; font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #c8a84b; }
+  .menu-panel summary::-webkit-details-marker { display: none; }
+  .menu-links { padding-bottom: 4px; }
+  .menu-link { display: block; padding: 7px 0; font-family: 'Work Sans', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #e9e1d2; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .menu-link:last-child { border-bottom: none; }
+  #register { width: 100vw; margin: 0 0 40px calc(50% - 50vw); }
+  .register-frame { width: 100%; height: 900px; border: 0; display: block; }
+
+  /* ── Ambient glow (replaces the old animated grid — calmer, pricier) ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 35% at 18% 8%, rgba(200,168,75,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 30% at 85% 75%, rgba(200,168,75,0.04) 0%, transparent 55%);
+    animation: bgPulse 9s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes bgPulse { 0% { opacity: .55; } 100% { opacity: 1; } }
+
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  /* ── Hero (full-bleed) ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+  .hero-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 8%;
+    display: block;
+    filter: brightness(0.78) saturate(0.96);
+  }
+  .hero-photo {
+    position: relative;
+    width: 100%; height: auto;
+    display: block;
+  }
+  .hero-scrim {
+    display: none;
+  }
+  .hero-content {
+    position: absolute; left: 0; right: 0; top: 10px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .hero-logo {
+    width: 137px; height: auto;
+    filter: none;
+  }
+  .hero-tagline {
+    font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+    color: #c8a84b;
+  }
+
+  /* ── Page column ── */
+  .page { max-width: 440px; margin: 0 auto; padding: 36px 22px 64px; position: relative; z-index: 1; }
+
+  .rule { width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #8a6d1f, transparent); margin: 0 auto 36px; }
+
+  .section-label {
+    font-size: 10.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+    color: #c8a84b; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.08); }
+  .section-label.full { margin: 44px 0 16px; }
+
+  /* ── Follow / Find — minimal index rows, no card chrome ── */
+  .two-col { display: flex; gap: 26px; }
+  .col { flex: 1; min-width: 0; }
+
+  .link-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    text-decoration: none; color: #e9e1d2;
+    transition: opacity .2s ease;
+  }
+  .col .link-row:last-child { border-bottom: none; }
+  .link-row:hover { opacity: .62; }
+  .link-row:active { opacity: .45; }
+  .link-row .icon { width: 17px; height: 17px; flex-shrink: 0; display: flex; }
+  .link-row .label { font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+  .link-row.loading { opacity: .4; pointer-events: none; }
+
+  /* ── Featured (Events) ── */
+  .featured {
+    display: block; text-decoration: none; color: inherit;
+    border: 1px solid rgba(200,168,75,.3);
+    background: linear-gradient(135deg, rgba(200,168,75,.08), rgba(200,168,75,.015));
+    border-radius: 3px;
+    padding: 22px 20px;
+    margin-bottom: 12px;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .featured:hover { border-color: rgba(200,168,75,.65); transform: translateY(-2px); }
+  .featured-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .featured-badge {
+    font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: #c8a84b;
+    background: rgba(200,168,75,.12); padding: 4px 9px; border-radius: 2px; font-weight: 600;
+  }
+  .featured-arrow { color: #c8a84b; font-size: 15px; }
+  .featured-title { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 23px; text-transform: uppercase; letter-spacing: .01em; margin-bottom: 5px; }
+  .featured-sub { font-size: 12px; color: #938a7b; line-height: 1.5; }
+
+  /* ── Tools grid ── */
+  .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tool-tile {
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 18px 16px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.015);
+    border-radius: 3px;
+    text-decoration: none; color: #e9e1d2;
+    transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+  .tool-tile:hover { border-color: rgba(200,168,75,.4); background: rgba(200,168,75,.04); transform: translateY(-2px); }
+  .tool-tile .icon-wrap {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tool-tile .label { font-size: 11.5px; font-weight: 600; letter-spacing: .03em; line-height: 1.35; }
+
+  .icon-catalog, .icon-quiz, .icon-game, .icon-draw { background: radial-gradient(circle at 30% 30%, rgba(200,168,75,0.26), rgba(200,168,75,0.05)); }
+  .catalog-spark { animation: twinkle 2s ease-in-out infinite; transform-origin: center; }
+  .quiz-spark   { animation: twinkle 1.8s ease-in-out infinite; transform-origin: center; }
+  .quiz-spark:nth-child(2) { animation-delay: .3s; }
+  .quiz-spark:nth-child(3) { animation-delay: .6s; }
+  .game-spark   { animation: twinkle 1.8s ease-in-out infinite; transform-origin: center; }
+  .game-spark:nth-child(4) { animation-delay: .2s; }
+  .game-spark:nth-child(5) { animation-delay: .4s; }
+  .game-spark:nth-child(6) { animation-delay: .6s; }
+  .game-spark:nth-child(7) { animation-delay: .8s; }
+  .game-spark:nth-child(8) { animation-delay: 1s; }
+  .draw-spark   { animation: twinkle 1.8s ease-in-out infinite; transform-origin: center; }
+  .draw-spark:nth-child(5) { animation-delay: .3s; }
+  @keyframes twinkle { 0%, 100% { opacity: .28; } 50% { opacity: 1; } }
+
+  /* ── Footer ── */
+  .footer { margin-top: 50px; text-align: center; font-size: 9px; letter-spacing: .2em; color: #3a352c; text-transform: uppercase; }
+
+  /* ── Entry animation ── */
+  .page > * { animation: fadeUp .6s ease both; }
+  .two-col { animation-delay: .08s; }
+  .section-label.full { animation-delay: .12s; }
+  .tools-wrap { animation-delay: .16s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero">
+    <img class="hero-photo" src="images/hero-poster.jpg" alt="Berita Harian: TEDD Barber Exchange">
+    <a class="float-register" href="#register">Register Now</a>
+    <div class="hero-scrim"></div>
+    <div class="menu-wrap">
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menuPanel"><span></span><span></span><span></span></button>
+      <nav class="menu-panel" id="menuPanel" hidden>
+        <details>
+          <summary>Follow Us</summary>
+          <div class="menu-links">
+          <a class="link-row" href="https://www.tiktok.com/@teddgrooming" onclick="openApp(event,null,null,'https://www.tiktok.com/@teddgrooming')">
+                    <div class="icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="#e9e1d2"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+                    </div>
+                    <div class="label">TikTok</div>
+                  </a>
+          <a class="link-row" href="https://www.instagram.com/teddgrooming/" onclick="openApp(event,'instagram://user?username=teddgrooming','intent://instagram.com/teddgrooming#Intent;package=com.instagram.android;scheme=https;end','https://www.instagram.com/teddgrooming/')">
+                    <div class="icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e9e1d2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </div>
+                    <div class="label">Instagram</div>
+                  </a>
+          <a class="link-row" href="https://www.youtube.com/@thegainculture" onclick="openApp(event,null,'intent://www.youtube.com/@thegainculture#Intent;package=com.google.android.youtube;scheme=https;end','https://www.youtube.com/@thegainculture')">
+                    <div class="icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="#e9e1d2"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </div>
+                    <div class="label">YouTube</div>
+                  </a>
+          <a class="link-row" href="https://www.facebook.com/teddgroomingcompany/" onclick="openApp(event,null,'intent://www.facebook.com/teddgroomingcompany#Intent;package=com.facebook.katana;scheme=https;end','https://www.facebook.com/teddgroomingcompany/')">
+                    <div class="icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="#e9e1d2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </div>
+                    <div class="label">Facebook</div>
+                  </a>
+          </div>
+        </details>
+        <details>
+          <summary>Find Us</summary>
+          <div class="menu-links">
+          <a class="link-row" href="https://wa.me/601164008983" onclick="openWhatsApp(event,'601164008983','https://wa.me/601164008983')">
+                    <div class="icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="#e9e1d2"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    </div>
+                    <div class="label">WhatsApp</div>
+                  </a>
+          <a class="link-row" href="https://shopee.com.my/teddgrooming" onclick="openApp(event,null,'intent://shopee.com.my/teddgrooming#Intent;package=com.shopee.my;scheme=https;end','https://shopee.com.my/teddgrooming')">
+                    <div class="icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="#e9e1d2"><path d="M15.9414 17.9633c.229-1.879-.981-3.077-4.1758-4.0969-1.548-.528-2.277-1.22-2.26-2.1719.065-1.056 1.048-1.825 2.352-1.85a5.2898 5.2898 0 0 1 2.8838.89c.116.072.197.06.263-.039.09-.145.315-.494.39-.62.051-.081.061-.187-.068-.281-.185-.1369-.704-.4149-.983-.5319a6.4697 6.4697 0 0 0-2.5118-.514c-1.909.008-3.4129 1.215-3.5389 2.826-.082 1.1629.494 2.1078 1.73 2.8278.262.152 1.6799.716 2.2438.892 1.774.552 2.695 1.5419 2.478 2.6969-.197 1.047-1.299 1.7239-2.818 1.7439-1.2039-.046-2.2878-.537-3.1278-1.19l-.141-.11c-.104-.08-.218-.075-.287.03-.05.077-.376.547-.458.67-.077.108-.035.168.045.234.35.293.817.613 1.134.775a6.7097 6.7097 0 0 0 2.8289.727 4.9048 4.9048 0 0 0 2.0759-.354c1.095-.465 1.8029-1.394 1.9449-2.554zM11.9986 1.4009c-2.068 0-3.7539 1.95-3.8329 4.3899h7.6657c-.08-2.44-1.765-4.3899-3.8328-4.3899zm7.8516 22.5981-.08.001-15.7843-.002c-1.074-.04-1.863-.91-1.971-1.991l-.01-.195L1.298 6.2858a.459.459 0 0 1 .45-.494h4.9748C6.8448 2.568 9.1607 0 11.9996 0c2.8388 0 5.1537 2.5689 5.2757 5.7898h4.9678a.459.459 0 0 1 .458.483l-.773 15.5883-.007.131c-.094 1.094-.979 1.9769-2.0709 2.0059z"/></svg>
+                    </div>
+                    <div class="label">Shopee</div>
+                  </a>
+          <a class="link-row" href="https://www.lazada.com.my/jtaoffmk/?q=All-Products&from=wangpu&langFlag=en&pageTypeId=2" target="_blank" rel="noopener noreferrer">
+                    <div class="icon">
+                      <img src="images/brand/lazada-icon.ico" alt="Lazada" width="17" height="17" style="border-radius:3px;filter:grayscale(.2) brightness(1.3);">
+                    </div>
+                    <div class="label">Lazada</div>
+                  </a>
+          <a class="link-row" href="https://www.teddgrooming.com" target="_blank" rel="noopener noreferrer" onclick="handleWebsite(this)">
+                    <div class="icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e9e1d2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4"/><path d="M12 2.8c2.6 2.5 4 5.8 4 9.2s-1.4 6.7-4 9.2c-2.6-2.5-4-5.8-4-9.2s1.4-6.7 4-9.2z"/></svg>
+                    </div>
+                    <div class="label">Website</div>
+                  </a>
+          </div>
+        </details>
+        <details>
+          <summary>Try Our Stuff</summary>
+          <div class="menu-links">
+          <a class="menu-link" href="events.html">Events</a>
+          <a class="menu-link" href="shop/TEDD CATALOG.html">Product Catalog</a>
+          <a class="menu-link" href="TEDD QUIZ.html">Hair Quiz</a>
+          <a class="menu-link" href="TEDD GAME.html">Catcher Game</a>
+          <a class="menu-link" href="TEDD LUCKY DRAW WINNERS.html">Lucky Draw HOF</a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div id="register">
+      <iframe class="register-frame" id="regFrame" src="barber-exchange/" title="Tedd Barber Exchange Vol. 1" scrolling="no"></iframe>
+    </div>
+    <script>
+      (function () {
+        var frame = document.getElementById('regFrame');
+        function fit() {
+          try {
+            var doc = frame.contentDocument;
+            if (doc && doc.body) frame.style.height = doc.body.scrollHeight + 'px';
+          } catch (e) {}
+        }
+        frame.addEventListener('load', function () {
+          fit();
+          try { new frame.contentWindow.ResizeObserver(fit).observe(frame.contentDocument.body); } catch (e) {}
+        });
+      })();
+    </script>
+
+    <div class="footer">© 2026 Tedd Grooming</div>
+
+  </div>
+
+  <script>
+    function handleWebsite(el) {
+      el.classList.add('loading');
+      setTimeout(() => el.classList.remove('loading'), 4000);
+    }
+
+    function openApp(e, iosScheme, androidIntent, webUrl) {
+      e.preventDefault();
+      const ua = navigator.userAgent;
+      const isAndroid = /Android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+      if (!isAndroid && !isIOS) {
+        window.open(webUrl, '_blank', 'noopener');
+        return;
+      }
+
+      if (isAndroid && androidIntent) {
+        window.location.href = androidIntent;
+        return;
+      }
+
+      if (isIOS && iosScheme) {
+        let appOpened = false;
+        const onBlur = () => { appOpened = true; };
+        window.addEventListener('blur', onBlur, { once: true });
+        setTimeout(() => {
+          window.removeEventListener('blur', onBlur);
+          if (!appOpened) window.location.href = webUrl;
+        }, 650);
+        window.location.href = iosScheme;
+        return;
+      }
+
+      window.location.href = webUrl;
+    }
+
+    function openWhatsApp(e, phone, webUrl) {
+      e.preventDefault();
+      const ua = navigator.userAgent;
+      const isAndroid = /Android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+      if (!isAndroid && !isIOS) {
+        window.open(webUrl, '_blank', 'noopener');
+        return;
+      }
+
+      let appOpened = false;
+      const onHide = () => { appOpened = true; };
+      window.addEventListener('blur', onHide, { once: true });
+      document.addEventListener('visibilitychange', onHide, { once: true });
+      setTimeout(() => {
+        window.removeEventListener('blur', onHide);
+        document.removeEventListener('visibilitychange', onHide);
+        if (!appOpened) window.location.href = webUrl;
+      }, 650);
+      window.location.href = `whatsapp://send?phone=${phone}`;
+    }
+  </script>
+
+<script>
+  (function () {
+    var btn = document.querySelector('.menu-btn');
+    var panel = document.getElementById('menuPanel');
+    btn.addEventListener('click', function () {
+      var open = panel.hasAttribute('hidden');
+      if (open) { panel.removeAttribute('hidden'); } else { panel.setAttribute('hidden', ''); }
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    function closeMenu() {
+      panel.setAttribute('hidden', '');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('click', function (e) {
+      if (!panel.hasAttribute('hidden') && !e.target.closest('.menu-wrap')) closeMenu();
+    });
+    window.addEventListener('scroll', function (e) {
+      if (!panel.hasAttribute('hidden') && !(e.target.closest && e.target.closest('.menu-wrap'))) closeMenu();
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+  })();
+</script>
+</body>
+</html>
