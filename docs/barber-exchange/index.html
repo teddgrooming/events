@@ -469,15 +469,15 @@
     // header, same layout as the event page
     x.fillStyle = '#a8a08a'; x.font = '400 26px JetBrains Mono, monospace';
     x.fillText('DOWNSOUTH BARBERSHOP · SETIA TROPIKA', 540, 110);
-    x.fillStyle = '#ACA783'; x.font = '900 170px ' + TITLE; x.fillText('TEDD', 540, 300);
+    x.fillStyle = '#ACA783'; x.font = '900 150px ' + TITLE; x.fillText('TEDD', 540, 300);
     x.fillStyle = '#f3ead9'; x.fillText('BARBER', 540, 440);
     // lowercase e at 1.3x so it matches XCHANGE
-    x.font = '900 221px ' + TITLE; var ew = x.measureText('e').width;
-    x.font = '900 170px ' + TITLE; var xw = x.measureText('XCHANGE').width;
+    x.font = '900 195px ' + TITLE; var ew = x.measureText('e').width;
+    x.font = '900 150px ' + TITLE; var xw = x.measureText('XCHANGE').width;
     var sx = 540 - (ew + xw) / 2;
     x.textAlign = 'left';
-    x.font = '900 221px ' + TITLE; x.fillText('e', sx, 580);
-    x.font = '900 170px ' + TITLE; x.fillText('XCHANGE', sx + ew, 580);
+    x.font = '900 195px ' + TITLE; x.fillText('e', sx, 580);
+    x.font = '900 150px ' + TITLE; x.fillText('XCHANGE', sx + ew, 580);
     x.textAlign = 'center';
     x.fillStyle = '#f3ead9'; x.font = '500 42px Oswald, sans-serif';
     x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', 540, 670);
@@ -510,7 +510,7 @@
         document.body.appendChild(a); a.click(); a.remove();
       }, 'image/png');
     };
-    if (document.fonts && document.fonts.load) { Promise.all([document.fonts.load('900 170px Archivo'), document.fonts.load('700 96px Oswald'), document.fonts.load('400 26px JetBrains Mono'), document.fonts.load('400 32px Work Sans')]).then(go, go); } else { go(); }
+    if (document.fonts && document.fonts.load) { Promise.all([document.fonts.load('900 150px Archivo'), document.fonts.load('700 96px Oswald'), document.fonts.load('400 26px JetBrains Mono'), document.fonts.load('400 32px Work Sans')]).then(go, go); } else { go(); }
   });
   document.getElementById('tcCopy').addEventListener('click', function() {
     var btn = this, cap = captionText();
