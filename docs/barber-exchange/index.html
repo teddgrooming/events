@@ -258,6 +258,17 @@
   footer a{color:inherit;}
   .embed #lineup, .embed .hero, .embed footer { display: none !important; }
   .embed .page { padding-top: 0; }
+  .ticket-card { margin-top: 16px; padding: 18px; background: #1a1612; border: 1px solid rgba(200,168,75,.35); border-radius: 6px; }
+  .tc-head { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #c8a84b; }
+  .tc-name { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: .02em; text-transform: uppercase; margin-top: 10px; }
+  .tc-track { font-size: 13px; color: #c8a84b; margin-top: 2px; }
+  .tc-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 8px 0; border-top: 1px solid rgba(255,255,255,.08); }
+  .tc-row span { color: #938a7b; }
+  .tc-row b { font-weight: 600; text-align: right; }
+  .tc-status { font-size: 12px; color: #e9e1d2; margin: 8px 0 12px; }
+  .tc-actions { display: flex; gap: 8px; }
+  .tc-btn { flex: 1; padding: 12px 8px; background: #c8a84b; color: #0a0806; border: 1px solid #c8a84b; border-radius: 4px; font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+  .tc-btn.secondary { background: transparent; color: #c8a84b; }
 </style>
 </head>
 <body>
@@ -360,6 +371,19 @@
         <span id="confirmText">Got it — your RSVP is in. We'll reach out on WhatsApp to confirm.</span>
       </div>
 
+      <div class="ticket-card" id="ticketCard" hidden>
+        <div class="tc-head">Tedd Barber Exchange · Vol. 1</div>
+        <div class="tc-name" id="tcName"></div>
+        <div class="tc-track" id="tcTrack"></div>
+        <div class="tc-row"><span>Date</span><b>Mon, 09 Nov 2026 · 9AM</b></div>
+        <div class="tc-row"><span>Venue</span><b>Downsouth Barbershop, Setia Tropika</b></div>
+        <div class="tc-row"><span>Booking ref</span><b id="tcRef"></b></div>
+        <div class="tc-status" id="tcStatus"></div>
+        <div class="tc-actions">
+          <button type="button" class="tc-btn" id="tcSave">Save ticket image</button>
+          <button type="button" class="tc-btn secondary" id="tcCopy">Copy post caption</button>
+        </div>
+      </div>
       <div class="payment" id="paymentBox" hidden>
         <div class="payment-title">Complete Your Payment</div>
         <div class="payment-row"><span>Bank</span><span>Maybank</span></div>
@@ -428,6 +452,62 @@
     stubName.textContent = nameInput.value.trim() || 'Your name';
   });
 
+  var ticket = null;
+  function trackText(t) { return t === 'masterclass' ? 'Look & Learn · Limited seats' : 'Downsouth Paradise · Free entry'; }
+  function captionText() {
+    var lines = ['I\'m in for Tedd Barber Exchange Vol. 1 🔥', '9 Nov 2026 · Downsouth Barbershop, Setia Tropika', '@teddgrooming'];
+    if (ticket && ticket.shop) lines.push(ticket.shop);
+    return lines.join('\n');
+  }
+  function drawTicketImage() {
+    var c = document.createElement('canvas'); c.width = 1080; c.height = 1350;
+    var x = c.getContext('2d');
+    x.fillStyle = '#0a0806'; x.fillRect(0, 0, 1080, 1350);
+    x.fillStyle = '#c8a84b'; x.fillRect(80, 120, 920, 4);
+    x.textAlign = 'left'; x.textBaseline = 'alphabetic';
+    x.fillStyle = '#ACA783'; x.font = '700 110px Oswald, sans-serif'; x.fillText('TEDD', 80, 280);
+    x.fillStyle = '#f3ead9'; x.fillText('BARBER', 80, 400);
+    x.fillText('eXCHANGE', 80, 520);
+    x.fillStyle = '#c8a84b'; x.font = '500 34px Oswald, sans-serif'; x.fillText('VOL. 1 · 9 NOV 2026', 80, 600);
+    x.fillStyle = '#938a7b'; x.font = '500 28px Oswald, sans-serif'; x.fillText('ADMIT', 80, 720);
+    var nm = ticket.name.toUpperCase(); if (nm.length > 22) nm = nm.slice(0, 22);
+    x.fillStyle = '#f3ead9'; x.font = '700 88px Oswald, sans-serif'; x.fillText(nm, 80, 820);
+    x.fillStyle = '#c8a84b'; x.font = '500 36px Oswald, sans-serif'; x.fillText(trackText(ticket.track).toUpperCase(), 80, 890);
+    x.fillStyle = '#e9e1d2'; x.font = '400 32px sans-serif';
+    x.fillText('Downsouth Barbershop, Setia Tropika', 80, 1000);
+    x.fillText('Booking ref: ' + ticket.ref, 80, 1060);
+    x.fillStyle = '#c8a84b'; x.font = '700 40px Oswald, sans-serif'; x.fillText('@teddgrooming', 80, 1250);
+    x.fillStyle = '#938a7b'; x.font = '400 26px sans-serif'; x.fillText('Show this at the door', 80, 1296);
+    return c;
+  }
+  document.getElementById('tcSave').addEventListener('click', function() {
+    if (!ticket) return;
+    var go = function() {
+      drawTicketImage().toBlob(function(b) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(b); a.download = 'tedd-ticket-' + ticket.ref + '.png';
+        document.body.appendChild(a); a.click(); a.remove();
+      }, 'image/png');
+    };
+    if (document.fonts && document.fonts.load) { document.fonts.load('700 88px Oswald').then(go, go); } else { go(); }
+  });
+  document.getElementById('tcCopy').addEventListener('click', function() {
+    var btn = this, cap = captionText();
+    if (!navigator.clipboard) { btn.textContent = 'Copy not supported'; return; }
+    navigator.clipboard.writeText(cap).then(function() { btn.textContent = 'Caption copied'; }, function() { btn.textContent = 'Copy failed'; });
+  });
+  function renderTicket(name, shop) {
+    var ref = 'TBE-' + String(Math.floor(1000 + Math.random() * 9000));
+    ticket = { name: name, shop: shop, track: track, ref: ref };
+    document.getElementById('tcName').textContent = name;
+    document.getElementById('tcTrack').textContent = trackText(track);
+    document.getElementById('tcRef').textContent = ref;
+    document.getElementById('tcStatus').textContent = track === 'masterclass'
+      ? 'Pending payment: send your proof on WhatsApp to lock your seat.'
+      : 'RSVP received. We will confirm on WhatsApp.';
+    document.getElementById('tcCopy').textContent = 'Copy post caption';
+    document.getElementById('ticketCard').hidden = false;
+  }
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var name = document.getElementById('fName').value.trim();
@@ -467,6 +547,7 @@
     }
 
     confirmBox.hidden = false;
+    renderTicket(name, shop);
   });
 })();
 </script>
