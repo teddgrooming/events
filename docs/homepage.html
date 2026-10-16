@@ -367,6 +367,19 @@
       if (open) { panel.removeAttribute('hidden'); } else { panel.setAttribute('hidden', ''); }
       btn.setAttribute('aria-expanded', String(open));
     });
+    function closeMenu() {
+      panel.setAttribute('hidden', '');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('click', function (e) {
+      if (!panel.hasAttribute('hidden') && !e.target.closest('.menu-wrap')) closeMenu();
+    });
+    window.addEventListener('scroll', function (e) {
+      if (!panel.hasAttribute('hidden') && !(e.target.closest && e.target.closest('.menu-wrap'))) closeMenu();
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
   })();
 </script>
 </body>
