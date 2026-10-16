@@ -54,14 +54,12 @@
   .hero-videos {
     position: absolute; inset: 0;
     display: flex; gap: 0; background: #0a0806;
-    border: 5px solid transparent;
-    border-image: linear-gradient(135deg, #ffffff 0%, #9aa3ad 22%, #e9edf1 45%, #7c8590 65%, #f7f9fb 85%, #a9b1ba 100%) 1;
   }
   .hero-videos::after {
-    content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 28px;
+    content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
     transform: translateX(-50%);
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.18), rgba(255,255,255,0));
+    -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+    background: rgba(255,255,255,0.08);
     pointer-events: none;
   }
   .hero-videos video {
