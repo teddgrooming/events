@@ -352,7 +352,7 @@
         <div class="stub-seat">VOL. 1<b id="stubDate">09 NOV</b></div>
       </div>
 
-      <button class="submit" type="submit" id="submitBtn">Reserve with Payment</button>
+      <button class="submit" type="submit" id="submitBtn">Reserve with payment</button>
       <div class="hint">Your spot is reserved the moment you hit submit — we'll confirm by WhatsApp.</div>
 
       <div class="confirm" id="confirmBox" hidden>
@@ -419,7 +419,7 @@
     fieldShop.hidden = !isM;
     fieldGuests.hidden = isM;
     stubTrack.textContent = isM ? 'Look & Learn · Limited seats' : 'Downsouth Paradise · Free entry';
-    submitBtn.textContent = isM ? 'Reserve with Payment' : 'Reserve my spot';
+    submitBtn.textContent = isM ? 'Reserve with payment' : 'Reserve my spot';
   }
   tabM.addEventListener('click', function(){ setTrack('masterclass'); });
   tabO.addEventListener('click', function(){ setTrack('openhouse'); });
