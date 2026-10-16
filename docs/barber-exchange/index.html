@@ -466,7 +466,14 @@
     x.textBaseline = 'alphabetic';
     x.fillStyle = '#ACA783'; x.font = '700 110px Oswald, sans-serif'; x.textAlign = 'center'; x.fillText('TEDD', 540, 280);
     x.fillStyle = '#f3ead9'; x.fillText('BARBER', 540, 400);
-    x.fillText('eXCHANGE', 540, 520);
+    // lowercase e drawn 1.3x larger, same as the event page, so it matches XCHANGE
+    x.font = '700 143px Oswald, sans-serif'; var ew = x.measureText('e').width;
+    x.font = '700 110px Oswald, sans-serif'; var xw = x.measureText('XCHANGE').width;
+    var sx = 540 - (ew + xw) / 2;
+    x.textAlign = 'left';
+    x.font = '700 143px Oswald, sans-serif'; x.fillText('e', sx, 520);
+    x.font = '700 110px Oswald, sans-serif'; x.fillText('XCHANGE', sx + ew, 520);
+    x.textAlign = 'center';
     x.fillStyle = '#c8a84b'; x.font = '500 34px Oswald, sans-serif'; x.fillText('VOL. 1', 540, 600); x.fillText('9 NOV 2026', 540, 660);
     x.textAlign = 'left'; x.fillStyle = '#938a7b'; x.font = '500 28px Oswald, sans-serif'; x.fillText('ADMIT', 80, 720);
     var nm = ticket.name.toUpperCase(); if (nm.length > 22) nm = nm.slice(0, 22);
