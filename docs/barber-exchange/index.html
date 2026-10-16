@@ -256,9 +256,12 @@
   footer .venue{font-size:14px;}
   footer .meta{font-size:12.5px;color:var(--muted);}
   footer a{color:inherit;}
+  .embed #lineup, .embed .hero, .embed footer { display: none !important; }
+  .embed .page { padding-top: 0; }
 </style>
 </head>
 <body>
+<script>if (location.search.indexOf('embed=1') > -1) document.documentElement.classList.add('embed');</script>
 <div class="page">
 
   <div class="hero">
@@ -275,7 +278,7 @@
     </div>
   </div>
 
-  <div>
+  <div id="lineup">
     <div class="section-label">The Line-up</div>
     <div class="tickets" style="margin-top:16px;">
       <div class="ticket">
@@ -311,7 +314,7 @@
     </div>
   </div>
 
-  <div>
+  <div id="register">
     <div class="section-label">Reserve Your Spot</div>
     <form class="rsvp" id="rsvpForm" style="margin-top:16px;" novalidate>
 
