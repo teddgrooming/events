@@ -9,11 +9,11 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html, body { background: #ffffff; }
+  html, body { background: #0a0806; }
 
   body {
     min-height: 100vh;
-    color: #1a1612;
+    color: #e9e1d2;
     font-family: 'Work Sans', 'Segoe UI', system-ui, sans-serif;
     position: relative;
     overflow-x: hidden;
@@ -31,14 +31,14 @@
   .menu-wrap { position: absolute; top: 12px; left: 12px; z-index: 5; }
   .menu-btn { width: 40px; height: 40px; border-radius: 6px; border: 0; cursor: pointer; padding: 0; background: rgba(10,8,6,0.7); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
   .menu-btn span { display: block; width: 20px; height: 2px; background: #ffffff; border-radius: 1px; }
-  .menu-panel { position: absolute; top: 48px; left: 0; width: 250px; background: #ffffff; border: 1px solid rgba(0,0,0,0.1); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.18); padding: 4px 16px 10px; }
+  .menu-panel { position: absolute; top: 48px; left: 0; width: 250px; background: #14110d; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.18); padding: 4px 16px 10px; }
   .menu-panel[hidden] { display: none; }
-  .menu-panel details { border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .menu-panel details { border-bottom: 1px solid rgba(255,255,255,0.08); }
   .menu-panel details:last-child { border-bottom: none; }
-  .menu-panel summary { list-style: none; cursor: pointer; padding: 13px 0; font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #8a6d1f; }
+  .menu-panel summary { list-style: none; cursor: pointer; padding: 13px 0; font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #c8a84b; }
   .menu-panel summary::-webkit-details-marker { display: none; }
   .menu-links { padding-bottom: 8px; }
-  .menu-link { display: block; padding: 9px 0; font-family: 'Work Sans', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #1a1612; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .menu-link { display: block; padding: 9px 0; font-family: 'Work Sans', system-ui, sans-serif; font-size: 14px; font-weight: 600; color: #e9e1d2; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .menu-link:last-child { border-bottom: none; }
   #register { width: 100vw; margin: 0 0 40px calc(50% - 50vw); }
   .register-frame { width: 100%; height: 900px; border: 0; display: block; }
@@ -91,7 +91,7 @@
   }
   .hero-tagline {
     font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
-    color: #8a6d1f;
+    color: #c8a84b;
   }
 
   /* ── Page column ── */
@@ -101,10 +101,10 @@
 
   .section-label {
     font-size: 10.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
-    color: #8a6d1f; margin-bottom: 14px;
+    color: #c8a84b; margin-bottom: 14px;
     display: flex; align-items: center; gap: 10px;
   }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,.12); }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.08); }
   .section-label.full { margin: 44px 0 16px; }
 
   /* ── Follow / Find — minimal index rows, no card chrome ── */
@@ -114,8 +114,8 @@
   .link-row {
     display: flex; align-items: center; gap: 12px;
     padding: 13px 0;
-    border-bottom: 1px solid rgba(0,0,0,.1);
-    text-decoration: none; color: #1a1612;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    text-decoration: none; color: #e9e1d2;
     transition: opacity .2s ease;
   }
   .col .link-row:last-child { border-bottom: none; }
@@ -128,8 +128,8 @@
   /* ── Featured (Events) ── */
   .featured {
     display: block; text-decoration: none; color: inherit;
-    border: 1px solid rgba(138,109,31,.35);
-    background: linear-gradient(135deg, rgba(200,168,75,.12), rgba(200,168,75,.03));
+    border: 1px solid rgba(200,168,75,.3);
+    background: linear-gradient(135deg, rgba(200,168,75,.08), rgba(200,168,75,.015));
     border-radius: 3px;
     padding: 22px 20px;
     margin-bottom: 12px;
@@ -138,22 +138,22 @@
   .featured:hover { border-color: rgba(200,168,75,.65); transform: translateY(-2px); }
   .featured-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
   .featured-badge {
-    font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: #8a6d1f;
-    background: rgba(138,109,31,.14); padding: 4px 9px; border-radius: 2px; font-weight: 600;
+    font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: #c8a84b;
+    background: rgba(200,168,75,.12); padding: 4px 9px; border-radius: 2px; font-weight: 600;
   }
-  .featured-arrow { color: #8a6d1f; font-size: 15px; }
+  .featured-arrow { color: #c8a84b; font-size: 15px; }
   .featured-title { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 23px; text-transform: uppercase; letter-spacing: .01em; margin-bottom: 5px; }
-  .featured-sub { font-size: 12px; color: #6b645a; line-height: 1.5; }
+  .featured-sub { font-size: 12px; color: #938a7b; line-height: 1.5; }
 
   /* ── Tools grid ── */
   .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .tool-tile {
     display: flex; flex-direction: column; gap: 14px;
     padding: 18px 16px;
-    border: 1px solid rgba(0,0,0,.1);
-    background: rgba(0,0,0,.02);
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.015);
     border-radius: 3px;
-    text-decoration: none; color: #1a1612;
+    text-decoration: none; color: #e9e1d2;
     transition: border-color .2s ease, background .2s ease, transform .2s ease;
   }
   .tool-tile:hover { border-color: rgba(200,168,75,.4); background: rgba(200,168,75,.04); transform: translateY(-2px); }
@@ -179,7 +179,7 @@
   @keyframes twinkle { 0%, 100% { opacity: .28; } 50% { opacity: 1; } }
 
   /* ── Footer ── */
-  .footer { margin-top: 50px; text-align: center; font-size: 9px; letter-spacing: .2em; color: #9a9284; text-transform: uppercase; }
+  .footer { margin-top: 50px; text-align: center; font-size: 9px; letter-spacing: .2em; color: #3a352c; text-transform: uppercase; }
 
   /* ── Entry animation ── */
   .page > * { animation: fadeUp .6s ease both; }
