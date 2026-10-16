@@ -307,7 +307,7 @@
 
       <div class="ticket">
         <span class="badge free">Free entry</span>
-        <h3>Retro Night</h3>
+        <h3>Downsouth Paradise</h3>
         <div class="time mono">19:00 – late</div>
         <p>Doors open to everyone once the sun's down. Makan-makan, live music, and a motor &amp; car show in the yard. No ticket needed to walk in — RSVP just helps us plan the food.</p>
       </div>
@@ -320,7 +320,7 @@
 
       <div class="tabs" role="tablist" aria-label="Choose a session">
         <button type="button" class="tab" id="tabMasterclass" role="tab" aria-selected="true">Look &amp; Learn</button>
-        <button type="button" class="tab" id="tabOpenhouse" role="tab" aria-selected="false">Retro Night</button>
+        <button type="button" class="tab" id="tabOpenhouse" role="tab" aria-selected="false">Downsouth Paradise</button>
       </div>
 
       <div class="field">
@@ -417,7 +417,7 @@
     tabO.setAttribute('aria-selected', String(!isM));
     fieldShop.hidden = !isM;
     fieldGuests.hidden = isM;
-    stubTrack.textContent = isM ? 'Look & Learn · Limited seats' : 'Retro Night · Free entry';
+    stubTrack.textContent = isM ? 'Look & Learn · Limited seats' : 'Downsouth Paradise · Free entry';
     submitBtn.textContent = isM ? 'Reserve with Payment' : 'Reserve my spot';
   }
   tabM.addEventListener('click', function(){ setTrack('masterclass'); });
@@ -438,7 +438,7 @@
     }
     var shop = document.getElementById('fShop').value.trim();
     var guests = document.getElementById('fGuests').value;
-    var trackLabel = track === 'masterclass' ? 'Look & Learn (limited seats)' : 'Retro Night (free entry)';
+    var trackLabel = track === 'masterclass' ? 'Look & Learn (limited seats)' : 'Downsouth Paradise (free entry)';
 
     if (SHEET_ENDPOINT) {
       fetch(SHEET_ENDPOINT, {
