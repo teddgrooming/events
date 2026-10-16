@@ -53,16 +53,16 @@
   }
   .hero-videos {
     position: absolute; inset: 0;
-    display: flex; gap: 4px; background: #ffffff;
+    display: flex; gap: 4px; background: transparent;
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
   }
   .hero-videos video {
     flex: 1 1 0; min-width: 0; height: 100%;
     object-fit: cover; object-position: center 30%;
-    filter: brightness(0.78) saturate(0.96);
   }
   .hero-scrim {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(10,8,6,0.75) 0%, rgba(10,8,6,0.25) 26%, rgba(10,8,6,0.3) 38%, rgba(255,255,255,0.85) 62%, #ffffff 100%);
+    display: none;
   }
   .hero-content {
     position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);
