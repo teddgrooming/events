@@ -19,6 +19,11 @@
     overflow-x: hidden;
   }
 
+  /* ── Register call-to-action under the photo ── */
+  .register-cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 28px; padding: 16px 18px; background: #1a1612; color: #ffffff; text-decoration: none; border-radius: 4px; }
+  .register-kicker { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #c8a84b; white-space: nowrap; }
+  .register-title { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 16px; letter-spacing: .06em; text-transform: uppercase; flex: 1; }
+  .register-arrow { font-size: 18px; color: #c8a84b; }
   /* ── Top-left menu ── */
   .menu-wrap { position: absolute; top: 12px; left: 12px; z-index: 5; }
   .menu-btn { width: 40px; height: 40px; border-radius: 6px; border: 0; cursor: pointer; padding: 0; background: rgba(10,8,6,0.7); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
@@ -261,6 +266,12 @@
   </div>
 
   <div class="page">
+
+    <a class="register-cta" href="barber-exchange/">
+      <span class="register-kicker">Now open</span>
+      <span class="register-title">Register for Tedd Barber Exchange Vol. 1</span>
+      <span class="register-arrow">→</span>
+    </a>
 
     <div class="footer">© 2026 Tedd Grooming</div>
 
