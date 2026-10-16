@@ -464,23 +464,33 @@
     var x = c.getContext('2d');
     var TITLE = 'Archivo, sans-serif';
     x.fillStyle = '#0a0806'; x.fillRect(0, 0, 1080, 1350);
-    x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    x.textBaseline = 'alphabetic';
 
-    // header, same layout as the event page
+    // title block: lines left-aligned inside a column that is centred on the card
+    x.font = '900 135px ' + TITLE; var tw = x.measureText('TEDD').width;
+    x.font = '900 175px ' + TITLE; var ew = x.measureText('e').width;
+    x.font = '900 135px ' + TITLE; var xw = x.measureText('XCHANGE').width;
+    var colW = ew + xw;
+    var x0 = 540 - colW / 2;
+
+    x.textAlign = 'center';
     x.fillStyle = '#a8a08a'; x.font = '400 26px JetBrains Mono, monospace';
     x.fillText('DOWNSOUTH BARBERSHOP · SETIA TROPIKA', 540, 110);
-    x.fillStyle = '#ACA783'; x.font = '900 150px ' + TITLE; x.fillText('TEDD', 540, 300);
-    x.fillStyle = '#f3ead9'; x.fillText('BARBER', 540, 440);
-    // lowercase e at 1.3x so it matches XCHANGE
-    x.font = '900 195px ' + TITLE; var ew = x.measureText('e').width;
-    x.font = '900 150px ' + TITLE; var xw = x.measureText('XCHANGE').width;
-    var sx = 540 - (ew + xw) / 2;
+
     x.textAlign = 'left';
-    x.font = '900 195px ' + TITLE; x.fillText('e', sx, 580);
-    x.font = '900 150px ' + TITLE; x.fillText('XCHANGE', sx + ew, 580);
-    x.textAlign = 'center';
+    x.fillStyle = '#ACA783'; x.font = '900 135px ' + TITLE; x.fillText('TEDD', x0, 300);
+    x.fillStyle = '#f3ead9'; x.fillText('BARBER', x0, 440);
+    // lowercase e at 1.3x so it matches XCHANGE
+    x.font = '900 175px ' + TITLE; x.fillText('e', x0, 580);
+    x.font = '900 135px ' + TITLE; x.fillText('XCHANGE', x0 + ew, 580);
+
+    // tagline sized to the same column width
     x.fillStyle = '#f3ead9'; x.font = '500 42px Oswald, sans-serif';
-    x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', 540, 670);
+    var tg = x.measureText('EXCHANGING IDEAS, EXPERIENCE & PASSION').width;
+    x.font = '500 ' + (42 * colW / tg) + 'px Oswald, sans-serif';
+    x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', x0, 670);
+
+    x.textAlign = 'center';
     x.font = '600 48px Oswald, sans-serif'; x.fillText('VOL. 1', 540, 750);
     x.fillStyle = '#c9584a'; x.fillRect(440, 790, 200, 5);
     x.fillStyle = '#f3ead9'; x.font = '700 40px JetBrains Mono, monospace';
