@@ -500,20 +500,20 @@
 
     x.textAlign = 'left';
     x.fillStyle = '#ACA783'; x.font = '900 92px ' + TITLE; x.fillText('TEDD', x0, 780);
-    x.fillStyle = '#f3ead9'; x.fillText('BARBER', x0, 890);
+    x.fillStyle = '#f3ead9'; x.fillText('BARBER', x0, 870);
     // lowercase e at 1.3x so it matches XCHANGE
-    x.font = '900 120px ' + TITLE; x.fillText('e', x0, 1000);
-    x.font = '900 92px ' + TITLE; x.fillText('XCHANGE', x0 + ew, 1000);
+    x.font = '900 120px ' + TITLE; x.fillText('e', x0, 950);
+    x.font = '900 92px ' + TITLE; x.fillText('XCHANGE', x0 + ew, 950);
 
     // tagline sized to exactly the width of eXCHANGE
     x.fillStyle = '#f3ead9'; x.font = '500 42px Oswald, sans-serif';
     var tg = x.measureText('EXCHANGING IDEAS, EXPERIENCE & PASSION').width;
     x.font = '500 ' + (42 * colW / tg) + 'px Oswald, sans-serif';
-    x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', x0, 1075);
+    x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', x0, 1020);
 
     x.textAlign = 'center';
     x.fillStyle = '#c8a84b'; x.font = '600 38px Oswald, sans-serif';
-    x.fillText('VOL. 1', 540, 1150);
+    x.fillText('VOL. 1', 540, 1090);
     return c;
   }
   document.getElementById('tcSave').addEventListener('click', function() {
