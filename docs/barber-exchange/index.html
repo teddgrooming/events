@@ -467,21 +467,23 @@
     x.textBaseline = 'alphabetic'; x.textAlign = 'center';
 
     // guest details at the top
+    x.fillStyle = '#c8a84b'; x.font = '600 36px Oswald, sans-serif';
+    x.letterSpacing = '6px'; x.fillText("YOU'RE IN. SEE YOU THERE", 540, 100); x.letterSpacing = '0px';
     x.fillStyle = '#938a7b'; x.font = '400 24px JetBrains Mono, monospace';
-    x.fillText('GUEST', 540, 150);
-    x.fillStyle = '#f3ead9'; x.font = '700 110px Oswald, sans-serif';
+    x.fillText('GUEST', 540, 190);
+    x.fillStyle = '#f3ead9'; x.font = '700 80px Oswald, sans-serif';
     var nm = ticket.name.toUpperCase(); if (nm.length > 20) nm = nm.slice(0, 20);
-    x.fillText(nm, 540, 265);
+    x.fillText(nm, 540, 290);
     x.fillStyle = '#c8a84b'; x.font = '500 36px Oswald, sans-serif';
-    x.fillText(trackText(ticket.track).toUpperCase(), 540, 335);
+    x.fillText(trackText(ticket.track).toUpperCase(), 540, 355);
     x.fillStyle = '#938a7b'; x.font = '400 28px JetBrains Mono, monospace';
-    x.fillText('Booking ref: ' + ticket.ref, 540, 385);
+    x.fillText('Booking ref: ' + ticket.ref, 540, 400);
 
     // date and venue together, under the guest details
     x.fillStyle = '#f3ead9'; x.font = '700 40px JetBrains Mono, monospace';
-    x.fillText('09.11.2026 · Monday', 540, 470);
+    x.fillText('09.11.2026 · Monday', 540, 480);
     x.fillStyle = '#c8c0b0'; x.font = '400 32px Work Sans, sans-serif';
-    x.fillText('Downsouth Barbershop, Setia Tropika', 540, 525);
+    x.fillText('Downsouth Barbershop, Setia Tropika', 540, 530);
 
     x.fillStyle = 'rgba(255,255,255,0.12)'; x.fillRect(140, 600, 800, 2);
 
