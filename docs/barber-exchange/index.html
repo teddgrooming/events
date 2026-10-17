@@ -577,6 +577,15 @@
       var waText = 'Hi, this is ' + name + ' — here is my payment proof for Tedd Barber Exchange Vol. 1 (Look & Learn).';
       paymentWaLink.href = 'https://wa.me/60122554254?text=' + encodeURIComponent(waText);
       paymentBox.hidden = false;
+      // jump to the payment section (works on the event page and when embedded on the homepage)
+      setTimeout(function () {
+        if (window.frameElement) {
+          var top = window.frameElement.getBoundingClientRect().top + window.parent.scrollY + paymentBox.getBoundingClientRect().top - 20;
+          window.parent.scrollTo({ top: top, behavior: 'smooth' });
+        } else {
+          paymentBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
     } else {
       confirmText.textContent = 'Got it — your RSVP is in. We\'ll reach out on WhatsApp to confirm.';
       paymentBox.hidden = true;
