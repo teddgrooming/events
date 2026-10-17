@@ -467,8 +467,13 @@
     x.textBaseline = 'alphabetic'; x.textAlign = 'center';
 
     // guest details at the top
-    x.fillStyle = '#c8a84b'; x.font = '600 36px Oswald, sans-serif';
-    x.letterSpacing = '6px'; x.fillText("YOU'RE IN. SEE YOU THERE", 540, 100); x.letterSpacing = '0px';
+    x.font = '600 36px Oswald, sans-serif'; x.letterSpacing = '6px';
+    // black outline first, then white text with a soft white glow
+    x.lineJoin = 'round'; x.lineWidth = 8; x.strokeStyle = '#000000';
+    x.strokeText("YOU'RE IN. SEE YOU THERE", 540, 100);
+    x.shadowColor = 'rgba(255,255,255,0.6)'; x.shadowBlur = 16;
+    x.fillStyle = '#ffffff'; x.fillText("YOU'RE IN. SEE YOU THERE", 540, 100);
+    x.shadowBlur = 0; x.shadowColor = 'transparent'; x.letterSpacing = '0px';
     x.fillStyle = '#938a7b'; x.font = '400 24px JetBrains Mono, monospace';
     x.fillText('GUEST', 540, 190);
     x.fillStyle = '#f3ead9'; x.font = '700 80px Oswald, sans-serif';
