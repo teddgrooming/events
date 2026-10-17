@@ -464,9 +464,28 @@
     var x = c.getContext('2d');
     var TITLE = 'Archivo, sans-serif';
     x.fillStyle = '#0a0806'; x.fillRect(0, 0, 1080, 1350);
-    x.textBaseline = 'alphabetic';
+    x.textBaseline = 'alphabetic'; x.textAlign = 'center';
 
-    // title block at the top; lines left-aligned inside a column centred on the card
+    // guest details at the top
+    x.fillStyle = '#938a7b'; x.font = '400 24px JetBrains Mono, monospace';
+    x.fillText('GUEST', 540, 150);
+    x.fillStyle = '#f3ead9'; x.font = '700 110px Oswald, sans-serif';
+    var nm = ticket.name.toUpperCase(); if (nm.length > 20) nm = nm.slice(0, 20);
+    x.fillText(nm, 540, 265);
+    x.fillStyle = '#c8a84b'; x.font = '500 36px Oswald, sans-serif';
+    x.fillText(trackText(ticket.track).toUpperCase(), 540, 335);
+    x.fillStyle = '#938a7b'; x.font = '400 28px JetBrains Mono, monospace';
+    x.fillText('Booking ref: ' + ticket.ref, 540, 385);
+
+    // date and venue together, under the guest details
+    x.fillStyle = '#f3ead9'; x.font = '700 40px JetBrains Mono, monospace';
+    x.fillText('09.11.2026 · Monday', 540, 470);
+    x.fillStyle = '#c8c0b0'; x.font = '400 32px Work Sans, sans-serif';
+    x.fillText('Downsouth Barbershop, Setia Tropika', 540, 525);
+
+    x.fillStyle = 'rgba(255,255,255,0.12)'; x.fillRect(140, 600, 800, 2);
+
+    // event name at the bottom; lines left-aligned inside a column centred on the card
     x.font = '900 115px ' + TITLE;
     x.font = '900 150px ' + TITLE; var ew = x.measureText('e').width;
     x.font = '900 115px ' + TITLE; var xw = x.measureText('XCHANGE').width;
@@ -474,37 +493,21 @@
     var x0 = 540 - colW / 2;
 
     x.textAlign = 'left';
-    x.fillStyle = '#ACA783'; x.font = '900 115px ' + TITLE; x.fillText('TEDD', x0, 200);
-    x.fillStyle = '#f3ead9'; x.fillText('BARBER', x0, 310);
+    x.fillStyle = '#ACA783'; x.font = '900 115px ' + TITLE; x.fillText('TEDD', x0, 780);
+    x.fillStyle = '#f3ead9'; x.fillText('BARBER', x0, 890);
     // lowercase e at 1.3x so it matches XCHANGE
-    x.font = '900 150px ' + TITLE; x.fillText('e', x0, 420);
-    x.font = '900 115px ' + TITLE; x.fillText('XCHANGE', x0 + ew, 420);
+    x.font = '900 150px ' + TITLE; x.fillText('e', x0, 1000);
+    x.font = '900 115px ' + TITLE; x.fillText('XCHANGE', x0 + ew, 1000);
 
     // tagline sized to exactly the width of eXCHANGE
     x.fillStyle = '#f3ead9'; x.font = '500 42px Oswald, sans-serif';
     var tg = x.measureText('EXCHANGING IDEAS, EXPERIENCE & PASSION').width;
     x.font = '500 ' + (42 * colW / tg) + 'px Oswald, sans-serif';
-    x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', x0, 500);
+    x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', x0, 1075);
 
     x.textAlign = 'center';
-    x.font = '600 48px Oswald, sans-serif'; x.fillText('VOL. 1', 540, 590);
-    x.fillStyle = '#c9584a'; x.fillRect(440, 630, 200, 5);
-    x.fillStyle = '#f3ead9'; x.font = '700 40px JetBrains Mono, monospace';
-    x.fillText('09.11.2026 · Monday', 540, 710);
-    x.fillStyle = '#c8c0b0'; x.font = '400 32px Work Sans, sans-serif';
-    x.fillText('Downsouth Barbershop, Setia Tropika', 540, 765);
-
-    // paying customer details only
-    x.fillStyle = 'rgba(255,255,255,0.12)'; x.fillRect(140, 880, 800, 2);
-    x.fillStyle = '#938a7b'; x.font = '400 24px JetBrains Mono, monospace';
-    x.fillText('GUEST', 540, 950);
-    x.fillStyle = '#f3ead9'; x.font = '700 96px Oswald, sans-serif';
-    var nm = ticket.name.toUpperCase(); if (nm.length > 20) nm = nm.slice(0, 20);
-    x.fillText(nm, 540, 1040);
-    x.fillStyle = '#c8a84b'; x.font = '500 36px Oswald, sans-serif';
-    x.fillText(trackText(ticket.track).toUpperCase(), 540, 1100);
-    x.fillStyle = '#938a7b'; x.font = '400 28px JetBrains Mono, monospace';
-    x.fillText('Booking ref: ' + ticket.ref, 540, 1160);
+    x.fillStyle = '#c8a84b'; x.font = '600 48px Oswald, sans-serif';
+    x.fillText('VOL. 1', 540, 1150);
     return c;
   }
   document.getElementById('tcSave').addEventListener('click', function() {
