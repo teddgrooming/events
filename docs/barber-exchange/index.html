@@ -467,27 +467,25 @@
     x.textBaseline = 'alphabetic';
 
     // title block: lines left-aligned inside a column that is centred on the card
-    x.font = '900 135px ' + TITLE; var tw = x.measureText('TEDD').width;
-    x.font = '900 175px ' + TITLE; var ew = x.measureText('e').width;
-    x.font = '900 135px ' + TITLE; var xw = x.measureText('XCHANGE').width;
+    x.font = '900 115px ' + TITLE; var tw = x.measureText('TEDD').width;
+    x.font = '900 150px ' + TITLE; var ew = x.measureText('e').width;
+    x.font = '900 115px ' + TITLE; var xw = x.measureText('XCHANGE').width;
     var colW = ew + xw;
     var x0 = 540 - colW / 2;
 
     x.textAlign = 'center';
-    x.fillStyle = '#a8a08a'; x.font = '400 26px JetBrains Mono, monospace';
-    x.fillText('DOWNSOUTH BARBERSHOP · SETIA TROPIKA', 540, 110);
 
     x.textAlign = 'left';
-    x.fillStyle = '#ACA783'; x.font = '900 135px ' + TITLE; x.fillText('TEDD', x0, 300);
+    x.fillStyle = '#ACA783'; x.font = '900 115px ' + TITLE; x.fillText('TEDD', x0, 300);
     x.fillStyle = '#f3ead9'; x.fillText('BARBER', x0, 440);
     // lowercase e at 1.3x so it matches XCHANGE
-    x.font = '900 175px ' + TITLE; x.fillText('e', x0, 580);
-    x.font = '900 135px ' + TITLE; x.fillText('XCHANGE', x0 + ew, 580);
+    x.font = '900 150px ' + TITLE; x.fillText('e', x0, 580);
+    x.font = '900 115px ' + TITLE; x.fillText('XCHANGE', x0 + ew, 580);
 
     // tagline sized to the same column width
     x.fillStyle = '#f3ead9'; x.font = '500 42px Oswald, sans-serif';
     var tg = x.measureText('EXCHANGING IDEAS, EXPERIENCE & PASSION').width;
-    x.font = '500 ' + (42 * colW / tg) + 'px Oswald, sans-serif';
+    x.font = '500 30px Oswald, sans-serif';
     x.fillText('EXCHANGING IDEAS, EXPERIENCE & PASSION', x0, 670);
 
     x.textAlign = 'center';
